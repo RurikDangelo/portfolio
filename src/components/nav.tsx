@@ -17,9 +17,10 @@ export function Nav({ lang, nav, iniciais }: { lang: Locale; nav: Dicionario["na
   const outro = lang === "pt" ? "en" : "pt";
   const links = [
     ["#sobre", nav.sobre],
-    ["#stack", nav.stack],
-    ["#experiencia", nav.experiencia],
+    ["#solucoes", nav.solucoes],
+    ["#automacoes", nav.automacoes],
     ["#projetos", nav.projetos],
+    ["#experiencia", nav.experiencia],
   ] as const;
 
   return (
@@ -31,7 +32,7 @@ export function Nav({ lang, nav, iniciais }: { lang: Locale; nav: Dicionario["na
           </span>
           <span className="hidden sm:inline">Rurik D&apos;Angelo</span>
         </a>
-        <ul className="hidden items-center gap-6 text-sm text-muted md:flex">
+        <ul className="hidden items-center gap-6 text-sm text-muted lg:flex">
           {links.map(([href, rotulo]) => (
             <li key={href}>
               <a href={href} className="transition-colors duration-300 hover:text-fg">

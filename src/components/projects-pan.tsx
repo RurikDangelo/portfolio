@@ -4,14 +4,14 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { Waveform } from "@phosphor-icons/react";
 import type { Projeto } from "@/content/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Do md para cima, a rolagem vertical desliza os projetos na horizontal (seção fixada).
 // No celular e com movimento reduzido, viram uma lista vertical comum.
-export function ProjectsPan({ titulo, projetos }: { titulo: string; projetos: Projeto[] }) {
+export function ProjectsPan({ titulo, aviso, projetos }: { titulo: string; aviso: string; projetos: Projeto[] }) {
   const wrap = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
@@ -44,6 +44,7 @@ export function ProjectsPan({ titulo, projetos }: { titulo: string; projetos: Pr
       <div ref={track} className="flex flex-col gap-6 px-4 py-24 md:h-[100dvh] md:flex-row md:items-center md:gap-8 md:px-[8vw] md:py-0">
         <div className="shrink-0 md:w-[32vw]">
           <h2 className="text-4xl font-semibold tracking-tighter md:text-6xl">{titulo}</h2>
+          <p className="mt-4 max-w-[36ch] text-muted">{aviso}</p>
         </div>
         {projetos.map((p) => (
           <article
@@ -51,13 +52,20 @@ export function ProjectsPan({ titulo, projetos }: { titulo: string; projetos: Pr
             className="group relative flex shrink-0 flex-col overflow-hidden rounded-2xl border border-line bg-elev md:h-[72dvh] md:w-[min(46vw,640px)]"
           >
             <div className="relative aspect-[16/10] overflow-hidden md:aspect-auto md:flex-1">
-              <Image
-                src={p.imagem}
-                alt=""
-                fill
-                sizes="(min-width: 768px) 46vw, 100vw"
-                className="projeto-img object-cover opacity-80 grayscale transition duration-700 group-hover:opacity-100 group-hover:grayscale-0"
-              />
+              {p.imagem ? (
+                <Image
+                  src={p.imagem}
+                  alt={p.titulo}
+                  fill
+                  sizes="(min-width: 768px) 46vw, 100vw"
+                  className="projeto-img object-cover object-left-top opacity-85 transition duration-700 group-hover:opacity-100"
+                />
+              ) : (
+                // Sem print público: um painel com a cor da marca no lugar da imagem.
+                <div className="projeto-img grid size-full place-items-center bg-[radial-gradient(circle_at_50%_60%,color-mix(in_oklch,var(--accent)_35%,transparent),transparent_60%)] text-accent">
+                  <Waveform size={96} weight="thin" />
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-elev via-elev/20 to-transparent" />
             </div>
             <div className="relative p-6 md:p-8">
@@ -77,17 +85,6 @@ export function ProjectsPan({ titulo, projetos }: { titulo: string; projetos: Pr
                     {s}
                   </span>
                 ))}
-                {p.link && (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`${p.titulo}: site`}
-                    className="ml-auto grid size-10 place-items-center rounded-full bg-accent text-accent-ink transition-transform hover:-translate-y-0.5 hover:rotate-12"
-                  >
-                    <ArrowUpRight size={18} weight="bold" />
-                  </a>
-                )}
               </div>
             </div>
           </article>
