@@ -1,6 +1,6 @@
 // Todo texto visível do site, nos dois idiomas. Nenhum componente escreve copy própria.
-// Regra de privacidade: nenhum nome de empresa, produto ou cliente. Projetos são descritos
-// pelo que fazem, e os prints em /public/projetos têm nomes, valores e mapas borrados.
+// Regra de privacidade: nenhum nome de produto ou cliente. O único print real é o do sistema
+// de laudos, com nomes, valores e mapa borrados; as demais imagens são fotos ilustrativas.
 
 export const locales = ["pt", "en"] as const;
 export type Locale = (typeof locales)[number];
@@ -14,6 +14,9 @@ export const perfil = {
   foto: "/perfil.webp",
 };
 
+// Fotos do Unsplash (licença livre), servidas direto do CDN deles.
+const foto = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1400&q=70`;
+
 type Projeto = {
   slug: string;
   titulo: string;
@@ -23,7 +26,7 @@ type Projeto = {
   imagem?: string;
 };
 
-type Experiencia = { cargo: string; empresa: string; periodo: string; resumo: string; tags: string[] };
+type Etapa = { titulo: string; onde: string; texto: string; tags: string[] };
 
 // Ícones resolvidos no componente pelo nome, para o conteúdo continuar serializável.
 export type Icone =
@@ -32,18 +35,18 @@ export type Icone =
   | "cart" | "chart" | "plug" | "robot" | "ruler" | "gear";
 
 type Passo = { icone: Icone; titulo: string; texto: string };
-type Fluxo = { id: string; nome: string; problema: string; resultado: string; passos: Passo[] };
-type Solucao = { icone: Icone; titulo: string; texto: string; itens: string[] };
+type Fluxo = { id: string; nome: string; passos: Passo[] };
+type Solucao = { icone: Icone; titulo: string; texto: string };
 
 type Dicionario = {
   meta: { titulo: string; descricao: string };
-  nav: { sobre: string; solucoes: string; automacoes: string; projetos: string; experiencia: string; cta: string };
+  nav: { sobre: string; solucoes: string; projetos: string; trajetoria: string; cta: string };
   hero: { eyebrow: string; papeis: string[]; sub: string; verProjetos: string; verSolucoes: string };
   sobre: { titulo: string; texto: string[]; cv: string; destaques: { valor: string; rotulo: string }[] };
-  solucoes: { titulo: string; sub: string; lista: Solucao[]; processoTitulo: string; processo: { titulo: string; texto: string }[] };
-  automacoes: { titulo: string; sub: string; problema: string; resultado: string; fluxos: Fluxo[] };
+  solucoes: { titulo: string; sub: string; lista: Solucao[] };
+  automacoes: { titulo: string; sub: string; fluxos: Fluxo[] };
   stack: { titulo: string; rapido: string; detalhe: string };
-  experiencia: { titulo: string; itens: Experiencia[] };
+  trajetoria: { titulo: string; itens: Etapa[] };
   github: {
     titulo: string;
     sub: string;
@@ -78,7 +81,7 @@ const stackGrupos = [
   },
   {
     grupo: { pt: "Dados e back-end", en: "Data and back-end" },
-    itens: ["C#", ".NET", "ASP.NET", "REST APIs", "PostgreSQL", "Supabase", "Row Level Security", "Prisma", "Node.js", "Bun", "WhatsApp API"],
+    itens: ["Java", "C#", ".NET", "ASP.NET", "REST APIs", "PostgreSQL", "Supabase", "Row Level Security", "Prisma", "Node.js", "Bun"],
   },
   {
     grupo: { pt: "Infra", en: "Infra" },
@@ -87,172 +90,103 @@ const stackGrupos = [
 ];
 export { stackGrupos };
 
+const imagens = {
+  plataforma: foto("1551288049-bebda4e38f71"),
+  laudos: "/projetos/laudos.webp",
+  verticais: foto("1720036236694-d0a231c52563"),
+  voz: foto("1617994452722-4145e196248b"),
+};
+
 const pt: Dicionario = {
   meta: {
     titulo: "Rurik D'Angelo | Head de Tecnologia, IA e SaaS",
-    descricao: "Sistemas de gestão, CRM com automações de IA e projetos técnicos para engenheiros.",
+    descricao: "SaaS, IA aplicada e projetos técnicos para engenheiros.",
   },
-  nav: { sobre: "Sobre", solucoes: "Soluções", automacoes: "Automações", projetos: "Projetos", experiencia: "Experiência", cta: "Fale comigo" },
+  nav: { sobre: "Sobre", solucoes: "O que construo", projetos: "Projetos", trajetoria: "Trajetória", cta: "Fale comigo" },
   hero: {
     eyebrow: "Head de Tecnologia",
     papeis: ["Especialista em IA", "Engenheiro de LLM", "Machine Learning", "Arquiteto de SaaS"],
-    sub: "Construo sistemas de gestão, CRMs com automação por IA e projetos técnicos para engenheiros.",
+    sub: "Construo plataformas SaaS, automações com IA e projetos técnicos para engenheiros.",
     verProjetos: "Ver projetos",
-    verSolucoes: "Soluções",
+    verSolucoes: "O que construo",
   },
   sobre: {
     titulo: "Tecnologia que resolve o negócio",
     texto: [
-      "Sou Head de Tecnologia, formado em Ciência da Computação e especialista em IA, LLM e Machine Learning. Cuido da arquitetura, do time e da entrega de plataformas que empresas usam o dia inteiro: ERP, CRM, financeiro, fiscal e atendimento.",
-      "Também desenvolvo projetos técnicos para engenheiros, como sistemas de laudos e avaliações, onde a precisão do dado vale tanto quanto a velocidade. Trabalho do banco de dados à interface, em C# .NET e no ecossistema TypeScript.",
-      "Meu foco é transformar processo manual em sistema: menos planilha, menos retrabalho e decisões com o número certo na tela.",
+      "Meu interesse por programação começou aos 15 anos, escrevendo meus primeiros programas em Java. A curiosidade de entender como o software funciona por dentro virou profissão.",
+      "Hoje sou Head de Tecnologia, formado em Ciência da Computação e especialista em IA, LLM e Machine Learning. Já desenvolvi plataformas SaaS completas do zero, da arquitetura e do banco de dados até a interface e a venda para os clientes.",
+      "Também desenvolvo projetos técnicos para engenheiros, como sistemas de laudos e avaliações, onde a precisão do dado vale tanto quanto a velocidade.",
     ],
     cv: "Baixar CV",
     destaques: [
+      { valor: "15 anos", rotulo: "idade do meu primeiro código, em Java" },
       { valor: "150+", rotulo: "rotas numa única plataforma multi-tenant" },
       { valor: "6,9 ms", rotulo: "consulta que levava 149 ms, depois de reescrita" },
-      { valor: "24 h", rotulo: "atendimento com IA no WhatsApp, sem fila" },
     ],
   },
   solucoes: {
-    titulo: "Soluções para empresas",
-    sub: "Software sob medida para o problema que trava a operação, não um pacote genérico com módulos que ninguém usa.",
+    titulo: "O que eu construo",
+    sub: "Software sob medida para operações reais, do banco de dados à interface.",
     lista: [
-      {
-        icone: "chat",
-        titulo: "CRM conversacional no WhatsApp",
-        texto: "Todas as conversas da empresa num só lugar, com funil, responsáveis e histórico de cada cliente.",
-        itens: ["Vários números e atendentes", "Funil de vendas em quadro", "IA que responde e qualifica"],
-      },
-      {
-        icone: "cart",
-        titulo: "ERP sob medida",
-        texto: "Vendas, estoque, compras, financeiro e fiscal conversando entre si, sem redigitar nada.",
-        itens: ["PDV e ordem de serviço", "Emissão de nota fiscal", "Multiempresa e multiloja"],
-      },
-      {
-        icone: "robot",
-        titulo: "Automação de processos com IA",
-        texto: "Agentes que leem documentos, classificam pedidos, respondem clientes e executam tarefas nos seus sistemas.",
-        itens: ["Agentes com ferramentas reais", "Leitura de PDFs e fotos", "Revisão humana onde importa"],
-      },
-      {
-        icone: "ruler",
-        titulo: "Projetos técnicos para engenheiros",
-        texto: "Sistemas para laudos, avaliações e relatórios técnicos, do levantamento de campo ao PDF aprovado.",
-        itens: ["Montagem de laudos", "Amostras e zoneamento", "Mapa de atuação"],
-      },
-      {
-        icone: "chart",
-        titulo: "Painéis e indicadores",
-        texto: "O número que importa na tela de quem decide, comparado com o período anterior e com a meta.",
-        itens: ["Metas e ritmo do mês", "Comparativo de períodos", "Alertas de desvio"],
-      },
-      {
-        icone: "plug",
-        titulo: "Integrações e migração",
-        texto: "Seu sistema novo conversa com o que já existe e nasce com os dados do antigo.",
-        itens: ["APIs e webhooks", "PIX e boletos", "Importação de planilhas"],
-      },
-    ],
-    processoTitulo: "Como um projeto anda",
-    processo: [
-      { titulo: "Diagnóstico", texto: "Entendo o processo real, onde o tempo se perde e o que precisa sair do papel." },
-      { titulo: "Protótipo", texto: "Uma versão navegável em poucos dias, para validar com quem vai usar." },
-      { titulo: "Produção", texto: "Entrega em etapas, com dados reais, testes e acesso por perfil." },
-      { titulo: "Evolução", texto: "Medição de uso e melhorias contínuas, com IA entrando onde dá retorno." },
+      { icone: "cart", titulo: "Plataformas SaaS", texto: "ERP e CRM multi-tenant, com vendas, estoque, financeiro, fiscal e atendimento integrados." },
+      { icone: "robot", titulo: "IA aplicada", texto: "Agentes que leem documentos, respondem clientes e executam tarefas, com revisão humana onde importa." },
+      { icone: "ruler", titulo: "Projetos para engenharia", texto: "Sistemas de laudos, avaliações e relatórios técnicos, do levantamento de campo ao PDF aprovado." },
+      { icone: "plug", titulo: "Dados e integrações", texto: "APIs, painéis de indicadores e migração de dados de planilhas e sistemas antigos." },
     ],
   },
   automacoes: {
-    titulo: "Automações com IA no CRM",
-    sub: "Fluxos que trabalham enquanto a equipe vende. Escolha um para ver cada etapa.",
-    problema: "O problema",
-    resultado: "O resultado",
+    titulo: "Exemplos de automação com IA",
+    sub: "Dois fluxos que já construí. As etapas acendem em sequência.",
     fluxos: [
       {
         id: "atendimento",
-        nome: "Atendimento e qualificação",
-        problema: "Lead chega fora do horário, espera horas e compra do concorrente.",
-        resultado: "Resposta na hora, lead qualificado e vendedor entrando com o contexto pronto.",
+        nome: "Atendimento no WhatsApp",
         passos: [
-          { icone: "chat", titulo: "Mensagem chega", texto: "O cliente escreve no WhatsApp, a qualquer hora." },
-          { icone: "brain", titulo: "IA entende a intenção", texto: "Identifica se é orçamento, dúvida, suporte ou reclamação." },
-          { icone: "funnel", titulo: "Qualifica o lead", texto: "Pergunta o essencial: produto, prazo, quantidade e região." },
-          { icone: "user", titulo: "Distribui no funil", texto: "Cria o card na etapa certa e atribui ao vendedor da vez." },
-          { icone: "handshake", titulo: "Vendedor assume", texto: "Recebe um resumo da conversa e fecha com o cliente aquecido." },
-        ],
-      },
-      {
-        id: "followup",
-        nome: "Follow-up de orçamento",
-        problema: "Orçamento enviado e esquecido. Ninguém lembra de cobrar a resposta.",
-        resultado: "Nenhum orçamento morre em silêncio, e o vendedor só entra quando há interesse.",
-        passos: [
-          { icone: "file", titulo: "Orçamento enviado", texto: "O sistema registra a proposta e o valor no card." },
-          { icone: "clock", titulo: "Sem resposta em 48 h", texto: "O prazo vence e o fluxo acorda sozinho." },
-          { icone: "pen", titulo: "IA escreve o lembrete", texto: "Mensagem personalizada com o que o cliente pediu." },
-          { icone: "reply", titulo: "Cliente responde", texto: "A IA tira a dúvida simples ou marca o interesse." },
-          { icone: "check", titulo: "Volta para o vendedor", texto: "Com prioridade alta e todo o histórico da negociação." },
-        ],
-      },
-      {
-        id: "posvenda",
-        nome: "Pós-venda e cobrança",
-        problema: "Cobrança manual, cliente que some depois da compra e recompra que não acontece.",
-        resultado: "Recebimento em dia, cliente acompanhado e venda recorrente puxada no tempo certo.",
-        passos: [
-          { icone: "heart", titulo: "Venda concluída", texto: "Boas-vindas, instruções de uso e pesquisa de satisfação." },
-          { icone: "pix", titulo: "Lembrete com PIX", texto: "Antes do vencimento, com o link de pagamento pronto." },
-          { icone: "check", titulo: "Baixa automática", texto: "Pagamento confirmado atualiza o financeiro sozinho." },
-          { icone: "repeat", titulo: "Hora de recomprar", texto: "Pelo histórico, a IA sugere a próxima oferta ao cliente." },
+          { icone: "chat", titulo: "Mensagem chega", texto: "O cliente escreve, a qualquer hora." },
+          { icone: "brain", titulo: "IA entende o pedido", texto: "Orçamento, dúvida ou suporte." },
+          { icone: "user", titulo: "Encaminha", texto: "Card no funil para a pessoa certa." },
+          { icone: "handshake", titulo: "Equipe assume", texto: "Com o resumo da conversa pronto." },
         ],
       },
       {
         id: "engenharia",
         nome: "Triagem para engenharia",
-        problema: "Engenheiro gastando o dia conferindo documento e foto em vez de analisar.",
-        resultado: "Laudo chega em rascunho, com pendências apontadas, e o engenheiro só revisa e assina.",
         passos: [
-          { icone: "camera", titulo: "Cliente envia arquivos", texto: "Fotos, matrículas e documentos pelo WhatsApp ou por link." },
-          { icone: "scan", titulo: "IA extrai os dados", texto: "Lê os documentos e aponta o que está faltando." },
-          { icone: "doc", titulo: "Monta o rascunho", texto: "Preenche o laudo com amostras e dados do imóvel." },
-          { icone: "seal", titulo: "Engenheiro revisa", texto: "Ajusta, aprova e assina com responsabilidade técnica." },
-          { icone: "send", titulo: "Cliente recebe", texto: "PDF final e atualização de status, sem ligação." },
+          { icone: "camera", titulo: "Arquivos chegam", texto: "Fotos e documentos do cliente." },
+          { icone: "scan", titulo: "IA extrai os dados", texto: "E aponta o que está faltando." },
+          { icone: "doc", titulo: "Rascunho do laudo", texto: "Preenchido com amostras e dados." },
+          { icone: "seal", titulo: "Engenheiro aprova", texto: "Revisa, ajusta e assina." },
         ],
       },
     ],
   },
   stack: { titulo: "Ferramentas do dia a dia", rapido: "Rápido", detalhe: "Detalhe" },
-  experiencia: {
-    titulo: "Onde trabalhei",
+  trajetoria: {
+    titulo: "Trajetória",
     itens: [
       {
-        cargo: "Head de Tecnologia",
-        empresa: "Empresa de software B2B (ERP e CRM)",
-        periodo: "jul. 2026 - hoje",
-        resumo: "Lidero a arquitetura e a entrega de uma plataforma multi-tenant de ERP e CRM com atendimento por IA no WhatsApp.",
-        tags: ["Liderança técnica", "Arquitetura", "Multi-tenant", "IA aplicada", "Next.js", "PostgreSQL"],
+        titulo: "SaaS completos, do zero à venda",
+        onde: "Software B2B",
+        texto: "Desenvolvi do zero plataformas SaaS completas de ERP e CRM, da arquitetura à interface, e vendi para empresas que usam o sistema todos os dias. Hoje lidero a tecnologia como Head.",
+        tags: ["Arquitetura", "Multi-tenant", "IA aplicada", "Vendas", "Liderança"],
       },
       {
-        cargo: "Desenvolvedor independente",
-        empresa: "Sistemas sob medida",
-        periodo: "atual",
-        resumo: "Sistemas de gestão para empresas e projetos técnicos para engenheiros, da especificação ao deploy.",
-        tags: ["ERP", "Engenharia", "Automação", "Supabase"],
+        titulo: "Projetos legados",
+        onde: "Poliedro Educação",
+        texto: "Trabalhei com projetos legados, mantendo e evoluindo sistemas que já estavam em uso.",
+        tags: ["Sistemas legados", "Manutenção", "Evolução"],
       },
       {
-        cargo: "Estagiário de Inovação",
-        empresa: "Poliedro Educação",
-        periodo: "abr. 2025 - jul. 2026",
-        resumo: "Projetos de inovação e desenvolvimento de software em equipe remota.",
-        tags: ["Inovação", "Desenvolvimento de software", "Remoto"],
+        titulo: "Suporte em TI",
+        onde: "Back4App",
+        texto: "Atuei no suporte em TI de uma plataforma de backend como serviço.",
+        tags: ["Suporte", "Infraestrutura"],
       },
       {
-        cargo: "Estagiário",
-        empresa: "Back4App",
-        periodo: "mai. 2024 - nov. 2024",
-        resumo: "Desenvolvimento Android e suporte técnico numa plataforma de backend como serviço.",
-        tags: ["Android", "Backend as a Service", "Suporte técnico"],
+        titulo: "Primeiro código",
+        onde: "Aos 15 anos, em Java",
+        texto: "Foi onde tudo começou: os primeiros programas em Java e a vontade de entender software por dentro.",
+        tags: ["Java", "Lógica de programação"],
       },
     ],
   },
@@ -273,20 +207,19 @@ const pt: Dicionario = {
   },
   projetos: {
     titulo: "Projetos selecionados",
-    aviso: "Telas de sistemas em produção, com nomes, valores e localizações ocultados.",
+    aviso: "A tela de laudos é real, com dados ocultados. As demais imagens são ilustrativas.",
     lista: [
       {
-        slug: "erp-crm",
+        slug: "plataforma",
         titulo: "Plataforma ERP e CRM white label",
         resumo: "Varejo, assistência técnica e locação numa plataforma multi-tenant, com CRM no WhatsApp e IA.",
         pontos: [
           "Mais de 150 rotas entre ERP, CRM e painel da plataforma",
           "Isolamento por empresa e por loja direto no banco",
           "Consulta reescrita de 149 ms para 6,9 ms",
-          "Assistente de IA que consulta os dados do negócio",
         ],
         stack: ["Next.js", "React", "PostgreSQL", "Supabase", "Tailwind"],
-        imagem: "/projetos/erp.webp",
+        imagem: imagens.plataforma,
       },
       {
         slug: "laudos",
@@ -296,22 +229,17 @@ const pt: Dicionario = {
           "Tempo médio de montagem medido por laudo",
           "Mapa de atuação por coordenada ou município",
           "Amostras, zoneamento e clientes integrados",
-          "Prazos da abertura à aprovação com alerta",
         ],
         stack: ["Next.js", "PostgreSQL", "Mapas", "PDF"],
-        imagem: "/projetos/laudos.webp",
+        imagem: imagens.laudos,
       },
       {
         slug: "verticais",
         titulo: "Sistemas verticais sob medida",
         resumo: "Gestão construída em torno do processo de cada negócio, do orçamento à entrega.",
-        pontos: [
-          "Produção guiada por ordem de serviço",
-          "PDV com ficha técnica e baixa de insumos",
-          "App offline para equipes em campo",
-        ],
+        pontos: ["Produção guiada por ordem de serviço", "PDV com ficha técnica e baixa de insumos", "App offline para equipes em campo"],
         stack: ["Next.js", "React", "Prisma", "PWA"],
-        imagem: "/projetos/modulos.webp",
+        imagem: imagens.verticais,
       },
       {
         slug: "voz",
@@ -319,183 +247,108 @@ const pt: Dicionario = {
         resumo: "Interface holográfica no navegador que acorda com a voz e executa tarefas reais.",
         pontos: ["Shaders GLSL próprios", "Ferramentas conectadas por MCP"],
         stack: ["React", "Three.js", "GLSL", "Claude Agent SDK"],
+        imagem: imagens.voz,
       },
     ],
   },
   contato: {
     titulo: "Vamos construir algo real",
-    texto: "Aberto a projetos de ERP, CRM com IA, automação de processos e sistemas para engenharia.",
+    texto: "Aberto a conversar sobre SaaS, IA aplicada e sistemas para engenharia.",
     foco: "Foco",
-    focoValor: "IA, LLM, Machine Learning, CRM, ERP e projetos técnicos para engenheiros",
+    focoValor: "IA, LLM, Machine Learning, SaaS e projetos técnicos para engenheiros",
   },
 };
 
 const en: Dicionario = {
   meta: {
     titulo: "Rurik D'Angelo | Head of Technology, AI and SaaS",
-    descricao: "Management systems, CRM with AI automations and technical projects for engineers.",
+    descricao: "SaaS, applied AI and technical projects for engineers.",
   },
-  nav: { sobre: "About", solucoes: "Solutions", automacoes: "Automations", projetos: "Projects", experiencia: "Experience", cta: "Get in touch" },
+  nav: { sobre: "About", solucoes: "What I build", projetos: "Projects", trajetoria: "Journey", cta: "Get in touch" },
   hero: {
     eyebrow: "Head of Technology",
     papeis: ["AI Specialist", "LLM Engineer", "Machine Learning", "SaaS Architect"],
-    sub: "I build management systems, CRMs with AI automation and technical projects for engineers.",
+    sub: "I build SaaS platforms, AI automations and technical projects for engineers.",
     verProjetos: "View projects",
-    verSolucoes: "Solutions",
+    verSolucoes: "What I build",
   },
   sobre: {
     titulo: "Technology that solves the business",
     texto: [
-      "I am a Head of Technology with a degree in Computer Science and a specialist in AI, LLMs and Machine Learning. I own the architecture, the team and the delivery of platforms companies use all day: ERP, CRM, finance, tax and customer service.",
-      "I also build technical projects for engineers, such as report and appraisal systems, where data accuracy matters as much as speed. I work from the database to the interface, in C# .NET and the TypeScript ecosystem.",
-      "My focus is turning manual processes into systems: fewer spreadsheets, less rework and decisions made with the right number on screen.",
+      "My interest in programming started at 15, writing my first programs in Java. The curiosity to understand how software works inside became a career.",
+      "Today I am a Head of Technology with a degree in Computer Science and a specialist in AI, LLMs and Machine Learning. I have built complete SaaS platforms from scratch, from architecture and database to the interface and selling them to customers.",
+      "I also build technical projects for engineers, such as report and appraisal systems, where data accuracy matters as much as speed.",
     ],
     cv: "Download CV",
     destaques: [
+      { valor: "Age 15", rotulo: "when I wrote my first code, in Java" },
       { valor: "150+", rotulo: "routes in a single multi-tenant platform" },
       { valor: "6.9 ms", rotulo: "query that took 149 ms, after a rewrite" },
-      { valor: "24 h", rotulo: "AI customer service on WhatsApp, no queue" },
     ],
   },
   solucoes: {
-    titulo: "Solutions for companies",
-    sub: "Custom software for the problem that blocks the operation, not a generic package full of unused modules.",
+    titulo: "What I build",
+    sub: "Custom software for real operations, from the database to the interface.",
     lista: [
-      {
-        icone: "chat",
-        titulo: "Conversational CRM on WhatsApp",
-        texto: "Every company conversation in one place, with a pipeline, owners and each customer's history.",
-        itens: ["Multiple numbers and agents", "Kanban sales pipeline", "AI that replies and qualifies"],
-      },
-      {
-        icone: "cart",
-        titulo: "Custom ERP",
-        texto: "Sales, inventory, purchasing, finance and tax talking to each other, with nothing typed twice.",
-        itens: ["POS and work orders", "Tax invoice issuing", "Multi-company and multi-store"],
-      },
-      {
-        icone: "robot",
-        titulo: "AI process automation",
-        texto: "Agents that read documents, sort requests, answer customers and run tasks inside your systems.",
-        itens: ["Agents with real tools", "PDF and photo reading", "Human review where it matters"],
-      },
-      {
-        icone: "ruler",
-        titulo: "Technical projects for engineers",
-        texto: "Systems for reports, appraisals and technical documents, from field survey to the approved PDF.",
-        itens: ["Report assembly", "Samples and zoning", "Coverage map"],
-      },
-      {
-        icone: "chart",
-        titulo: "Dashboards and KPIs",
-        texto: "The number that matters on the decision maker's screen, compared with the last period and the goal.",
-        itens: ["Goals and monthly pace", "Period comparison", "Deviation alerts"],
-      },
-      {
-        icone: "plug",
-        titulo: "Integrations and migration",
-        texto: "Your new system talks to what already exists and starts with the old system's data.",
-        itens: ["APIs and webhooks", "Instant payments and invoices", "Spreadsheet import"],
-      },
-    ],
-    processoTitulo: "How a project moves",
-    processo: [
-      { titulo: "Discovery", texto: "I learn the real process, where time is lost and what needs to leave paper." },
-      { titulo: "Prototype", texto: "A clickable version in a few days, validated with the people who will use it." },
-      { titulo: "Production", texto: "Delivery in stages, with real data, tests and role-based access." },
-      { titulo: "Evolution", texto: "Usage metrics and continuous improvement, with AI where it pays off." },
+      { icone: "cart", titulo: "SaaS platforms", texto: "Multi-tenant ERP and CRM with sales, inventory, finance, tax and customer service working together." },
+      { icone: "robot", titulo: "Applied AI", texto: "Agents that read documents, answer customers and run tasks, with human review where it matters." },
+      { icone: "ruler", titulo: "Engineering projects", texto: "Systems for reports, appraisals and technical documents, from field survey to the approved PDF." },
+      { icone: "plug", titulo: "Data and integrations", texto: "APIs, KPI dashboards and data migration from spreadsheets and legacy systems." },
     ],
   },
   automacoes: {
-    titulo: "AI automations in the CRM",
-    sub: "Flows that work while the team sells. Pick one to see every step.",
-    problema: "The problem",
-    resultado: "The result",
+    titulo: "AI automation examples",
+    sub: "Two flows I have built. The steps light up in sequence.",
     fluxos: [
       {
         id: "atendimento",
-        nome: "Service and qualification",
-        problema: "A lead arrives after hours, waits for hours and buys from a competitor.",
-        resultado: "Instant replies, qualified leads and a salesperson stepping in with the context ready.",
+        nome: "WhatsApp service",
         passos: [
-          { icone: "chat", titulo: "Message arrives", texto: "The customer writes on WhatsApp, at any hour." },
-          { icone: "brain", titulo: "AI reads the intent", texto: "Tells a quote request from a question, support or a complaint." },
-          { icone: "funnel", titulo: "Qualifies the lead", texto: "Asks the essentials: product, deadline, quantity and region." },
-          { icone: "user", titulo: "Routes the pipeline", texto: "Creates the card in the right stage and assigns the next salesperson." },
-          { icone: "handshake", titulo: "Salesperson takes over", texto: "Gets a conversation summary and closes with a warm customer." },
-        ],
-      },
-      {
-        id: "followup",
-        nome: "Quote follow-up",
-        problema: "A quote is sent and forgotten. Nobody remembers to chase the answer.",
-        resultado: "No quote dies in silence, and sales only steps in when there is interest.",
-        passos: [
-          { icone: "file", titulo: "Quote sent", texto: "The system records the proposal and value on the card." },
-          { icone: "clock", titulo: "No reply in 48 h", texto: "The deadline passes and the flow wakes up on its own." },
-          { icone: "pen", titulo: "AI writes the reminder", texto: "A personal message about what the customer asked for." },
-          { icone: "reply", titulo: "Customer replies", texto: "AI answers simple doubts or flags the interest." },
-          { icone: "check", titulo: "Back to sales", texto: "With high priority and the full negotiation history." },
-        ],
-      },
-      {
-        id: "posvenda",
-        nome: "After-sales and billing",
-        problema: "Manual collection, customers who vanish after buying and repeat sales that never happen.",
-        resultado: "Payments on time, customers followed up and repeat sales pulled at the right moment.",
-        passos: [
-          { icone: "heart", titulo: "Sale closed", texto: "Welcome message, instructions and a satisfaction survey." },
-          { icone: "pix", titulo: "Payment reminder", texto: "Before the due date, with the payment link ready." },
-          { icone: "check", titulo: "Automatic settlement", texto: "A confirmed payment updates finance on its own." },
-          { icone: "repeat", titulo: "Time to buy again", texto: "From the history, AI suggests the next offer." },
+          { icone: "chat", titulo: "Message arrives", texto: "The customer writes, at any hour." },
+          { icone: "brain", titulo: "AI reads the request", texto: "Quote, question or support." },
+          { icone: "user", titulo: "Routes it", texto: "A pipeline card for the right person." },
+          { icone: "handshake", titulo: "Team takes over", texto: "With the conversation summary ready." },
         ],
       },
       {
         id: "engenharia",
         nome: "Engineering intake",
-        problema: "Engineers spend the day checking documents and photos instead of analysing.",
-        resultado: "The report arrives as a draft with gaps flagged, and the engineer only reviews and signs.",
         passos: [
-          { icone: "camera", titulo: "Customer sends files", texto: "Photos, deeds and documents via WhatsApp or a link." },
-          { icone: "scan", titulo: "AI extracts the data", texto: "Reads the documents and points out what is missing." },
-          { icone: "doc", titulo: "Builds the draft", texto: "Fills the report with samples and property data." },
-          { icone: "seal", titulo: "Engineer reviews", texto: "Adjusts, approves and signs with technical responsibility." },
-          { icone: "send", titulo: "Customer receives", texto: "Final PDF and a status update, no phone call." },
+          { icone: "camera", titulo: "Files arrive", texto: "Customer photos and documents." },
+          { icone: "scan", titulo: "AI extracts the data", texto: "And flags what is missing." },
+          { icone: "doc", titulo: "Report draft", texto: "Filled with samples and data." },
+          { icone: "seal", titulo: "Engineer approves", texto: "Reviews, adjusts and signs." },
         ],
       },
     ],
   },
   stack: { titulo: "Everyday tools", rapido: "Quick", detalhe: "Detail" },
-  experiencia: {
-    titulo: "Where I have worked",
+  trajetoria: {
+    titulo: "Journey",
     itens: [
       {
-        cargo: "Head of Technology",
-        empresa: "B2B software company (ERP and CRM)",
-        periodo: "Jul 2026 - present",
-        resumo: "I lead architecture and delivery of a multi-tenant ERP and CRM platform with AI customer service on WhatsApp.",
-        tags: ["Technical leadership", "Architecture", "Multi-tenant", "Applied AI", "Next.js", "PostgreSQL"],
+        titulo: "Complete SaaS, from zero to sale",
+        onde: "B2B software",
+        texto: "I built complete ERP and CRM SaaS platforms from scratch, from architecture to interface, and sold them to companies that use them every day. Today I lead technology as Head.",
+        tags: ["Architecture", "Multi-tenant", "Applied AI", "Sales", "Leadership"],
       },
       {
-        cargo: "Independent developer",
-        empresa: "Custom systems",
-        periodo: "ongoing",
-        resumo: "Management systems for companies and technical projects for engineers, from spec to deploy.",
-        tags: ["ERP", "Engineering", "Automation", "Supabase"],
+        titulo: "Legacy projects",
+        onde: "Poliedro Educação",
+        texto: "I worked on legacy projects, maintaining and evolving systems that were already in use.",
+        tags: ["Legacy systems", "Maintenance", "Evolution"],
       },
       {
-        cargo: "Innovation Intern",
-        empresa: "Poliedro Educação",
-        periodo: "Apr 2025 - Jul 2026",
-        resumo: "Innovation projects and software development in a remote team.",
-        tags: ["Innovation", "Software development", "Remote"],
+        titulo: "IT support",
+        onde: "Back4App",
+        texto: "I worked in IT support for a backend-as-a-service platform.",
+        tags: ["Support", "Infrastructure"],
       },
       {
-        cargo: "Intern",
-        empresa: "Back4App",
-        periodo: "May 2024 - Nov 2024",
-        resumo: "Android development and technical support on a backend-as-a-service platform.",
-        tags: ["Android", "Backend as a Service", "Technical support"],
+        titulo: "First code",
+        onde: "At 15, in Java",
+        texto: "Where it all started: my first Java programs and the urge to understand software from the inside.",
+        tags: ["Java", "Programming logic"],
       },
     ],
   },
@@ -516,7 +369,7 @@ const en: Dicionario = {
   },
   projetos: {
     titulo: "Selected projects",
-    aviso: "Screens from systems in production, with names, values and locations hidden.",
+    aviso: "The reports screen is real, with data hidden. The other images are illustrative.",
     lista: [
       {
         ...pt.projetos.lista[0],
@@ -526,7 +379,6 @@ const en: Dicionario = {
           "Over 150 routes across ERP, CRM and the platform panel",
           "Per-company and per-store isolation inside the database",
           "Query rewritten from 149 ms to 6.9 ms",
-          "AI assistant that queries business data",
         ],
       },
       {
@@ -537,7 +389,6 @@ const en: Dicionario = {
           "Average assembly time measured per report",
           "Coverage map by coordinates or municipality",
           "Samples, zoning and clients in one place",
-          "Deadlines from opening to approval, with alerts",
         ],
         stack: ["Next.js", "PostgreSQL", "Maps", "PDF"],
       },
@@ -557,9 +408,9 @@ const en: Dicionario = {
   },
   contato: {
     titulo: "Let's build something real",
-    texto: "Open to ERP, AI-powered CRM, process automation and engineering systems projects.",
+    texto: "Open to talk about SaaS, applied AI and engineering systems.",
     foco: "Focus",
-    focoValor: "AI, LLM, Machine Learning, CRM, ERP and technical projects for engineers",
+    focoValor: "AI, LLM, Machine Learning, SaaS and technical projects for engineers",
   },
 };
 

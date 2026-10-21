@@ -5,9 +5,7 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "picsum.photos" },
-      { protocol: "https", hostname: "fastly.picsum.photos" },
-      { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
   turbopack: {

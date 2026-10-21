@@ -28,17 +28,12 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Faixa />
         <Sobre t={t} />
         <Solucoes t={t} />
-        <section id="automacoes" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
-          <Scramble texto={t.automacoes.titulo} className="text-4xl font-semibold tracking-tighter md:text-5xl" />
-          <p className="mb-10 mt-4 max-w-[60ch] text-lg text-muted">{t.automacoes.sub}</p>
-          <Automacoes t={t.automacoes} />
-        </section>
         <ProjectsPan titulo={t.projetos.titulo} aviso={t.projetos.aviso} projetos={t.projetos.lista} />
         <section id="stack" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
           <Scramble texto={t.stack.titulo} className="mb-10 text-4xl font-semibold tracking-tighter md:text-5xl" />
           <StackToggle grupos={stackGrupos} lang={lang} rotulos={t.stack} />
         </section>
-        <Experiencia t={t} />
+        <Trajetoria t={t} />
         <Suspense fallback={<GithubEsqueleto t={t} />}>
           <GithubPublico t={t} lang={lang} />
         </Suspense>
@@ -169,69 +164,54 @@ function Solucoes({ t }: { t: Dicionario }) {
     <section id="solucoes" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
       <Scramble texto={s.titulo} className="text-4xl font-semibold tracking-tighter md:text-5xl" />
       <p className="mt-4 max-w-[60ch] text-lg text-muted">{s.sub}</p>
-      <div className="mt-12 grid gap-4 md:grid-cols-6">
+      <div className="mt-12 grid gap-4 md:grid-cols-2">
         {s.lista.map((item, i) => (
-          <Reveal key={item.titulo} delay={(i % 3) * 0.06} className={i < 2 ? "md:col-span-3" : "md:col-span-2"}>
+          <Reveal key={item.titulo} delay={(i % 2) * 0.06}>
             <article
-              className={`group flex h-full flex-col rounded-2xl border border-line p-7 transition-colors hover:border-accent ${
+              className={`group flex h-full gap-5 rounded-2xl border border-line p-7 transition-colors hover:border-accent ${
                 i === 0
-                  ? "bg-[radial-gradient(circle_at_100%_0%,color-mix(in_oklch,var(--accent)_20%,transparent),transparent_65%)] bg-elev"
+                  ? "bg-[radial-gradient(circle_at_100%_0%,color-mix(in_oklch,var(--accent)_18%,transparent),transparent_65%)] bg-elev"
                   : i === 3
-                    ? "bg-[linear-gradient(135deg,color-mix(in_oklch,var(--accent)_12%,var(--bg-elev)),var(--bg-elev))]"
+                    ? "bg-[linear-gradient(135deg,color-mix(in_oklch,var(--accent)_10%,var(--bg-elev)),var(--bg-elev))]"
                     : "bg-elev"
               }`}
             >
-              <span className="grid size-12 place-items-center rounded-xl bg-bg text-accent transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110">
+              <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-bg text-accent transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110">
                 <Icone nome={item.icone} size={24} />
               </span>
-              <h3 className="mt-6 text-xl font-semibold tracking-tight">{item.titulo}</h3>
-              <p className="mt-2 text-muted">{item.texto}</p>
-              <ul className="mt-auto flex flex-wrap gap-2 pt-6">
-                {item.itens.map((x) => (
-                  <li key={x} className="rounded-full border border-line px-3 py-1 text-xs text-muted">
-                    {x}
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <h3 className="text-xl font-semibold tracking-tight">{item.titulo}</h3>
+                <p className="mt-2 text-muted">{item.texto}</p>
+              </div>
             </article>
           </Reveal>
         ))}
       </div>
-
-      <h3 className="mt-20 text-2xl font-semibold tracking-tight">{s.processoTitulo}</h3>
-      <ol className="mt-8 grid gap-8 md:grid-cols-4">
-        {s.processo.map((p, i) => (
-          <Reveal key={p.titulo} delay={i * 0.08}>
-            <li className="relative">
-              <span className="block h-px w-full bg-line">
-                <span className="block h-px w-1/3 bg-accent" />
-              </span>
-              <p className="mt-5 text-lg font-medium">{p.titulo}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{p.texto}</p>
-            </li>
-          </Reveal>
-        ))}
-      </ol>
+      <Reveal className="mt-4">
+        <Automacoes t={t.automacoes} />
+      </Reveal>
     </section>
   );
 }
 
-function Experiencia({ t }: { t: Dicionario }) {
+function Trajetoria({ t }: { t: Dicionario }) {
   return (
-    <section id="experiencia" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
-      <Scramble texto={t.experiencia.titulo} className="mb-12 text-4xl font-semibold tracking-tighter md:text-5xl" />
+    <section id="trajetoria" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
+      <Scramble texto={t.trajetoria.titulo} className="mb-12 text-4xl font-semibold tracking-tighter md:text-5xl" />
       <ol className="relative space-y-4 md:ml-6 md:border-l md:border-line md:pl-10">
-        {t.experiencia.itens.map((e, i) => (
-          <Reveal key={`${e.empresa}-${e.cargo}`} delay={i * 0.06}>
-            <li className="group relative grid gap-3 rounded-2xl border border-line bg-elev p-6 transition-colors hover:border-accent md:grid-cols-[1fr_auto] md:p-8">
-              <span className="absolute -left-[3.05rem] top-9 hidden size-3 rounded-full border-2 border-bg bg-accent md:block" aria-hidden />
-              <div>
-                <h3 className="text-xl font-semibold tracking-tight md:text-2xl">{e.cargo}</h3>
-                <p className="mt-1 text-muted">{e.empresa}</p>
+        {t.trajetoria.itens.map((e, i) => (
+          <Reveal key={e.titulo} delay={i * 0.06}>
+            <li className="group relative grid gap-3 rounded-2xl border border-line bg-elev p-6 transition-colors hover:border-accent md:p-8">
+              <span
+                className={`absolute -left-[3.05rem] top-9 hidden size-3 rounded-full border-2 border-bg md:block ${i === 0 ? "bg-accent" : "bg-line"}`}
+                aria-hidden
+              />
+              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                <h3 className="text-xl font-semibold tracking-tight md:text-2xl">{e.titulo}</h3>
+                <p className="font-mono text-sm text-muted">{e.onde}</p>
               </div>
-              <p className="font-mono text-sm text-muted md:text-right">{e.periodo}</p>
-              <p className="max-w-[70ch] md:col-span-2">{e.resumo}</p>
-              <ul className="flex flex-wrap gap-2 md:col-span-2">
+              <p className="max-w-[70ch] text-muted">{e.texto}</p>
+              <ul className="flex flex-wrap gap-2">
                 {e.tags.map((tag) => (
                   <li key={tag} className="rounded-full bg-bg px-3 py-1 font-mono text-xs text-muted">
                     {tag}
