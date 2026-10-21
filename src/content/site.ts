@@ -11,7 +11,7 @@ export const perfil = {
   github: "RurikDangelo",
   linkedin: "https://www.linkedin.com/in/rurik-d-angelo-626492221",
   email: "",
-  foto: "/sobre-v3.webp",
+  foto: "/sobre-v4.webp",
 };
 
 type Projeto = {
