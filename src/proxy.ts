@@ -1,14 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { locales } from "@/content/site";
 
-// "/" e qualquer caminho sem idioma vão para /pt ou /en conforme o navegador.
+// "/" e qualquer caminho sem idioma vão sempre para o português; o inglês fica no botão EN.
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   if (locales.some((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`))) return;
 
-  const aceita = request.headers.get("accept-language") ?? "";
-  const lang = /^\s*pt/i.test(aceita) || !/^\s*en/i.test(aceita) ? "pt" : "en";
-  request.nextUrl.pathname = `/${lang}${pathname}`;
+  request.nextUrl.pathname = `/pt${pathname}`;
   return NextResponse.redirect(request.nextUrl);
 }
 

@@ -5,7 +5,7 @@ import { ArrowDown, ArrowUpRight, GithubLogo, LinkedinLogo, EnvelopeSimple, Down
 import { dicionarios, hasLocale, perfil, stackGrupos, type Dicionario, type Locale } from "@/content/site";
 import { resumoGithub } from "@/lib/github";
 import { Nav } from "@/components/nav";
-import { NeuralField } from "@/components/neural-field";
+import { PortalHero } from "@/components/portal-hero";
 import { Typewriter } from "@/components/typewriter";
 import { Scramble } from "@/components/scramble";
 import { Reveal } from "@/components/reveal";
@@ -46,30 +46,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 function Hero({ t }: { t: Dicionario }) {
   return (
     <section className="relative flex min-h-[100dvh] items-center overflow-hidden">
-      {/* Vídeo de fundo: telas de sistemas em produção, já anonimizadas. Parado com movimento reduzido. */}
-      <video
-        className="absolute inset-0 size-full scale-105 object-cover opacity-45 motion-reduce:hidden"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/video/hero-poster.jpg"
-        aria-hidden
-      >
-        <source src="/video/hero.webm" type="video/webm" />
-        <source src="/video/hero.mp4" type="video/mp4" />
-      </video>
-      <Image src="/video/hero-poster.jpg" alt="" fill priority className="hidden object-cover opacity-40 motion-reduce:block" />
-      <NeuralField className="absolute inset-0 size-full opacity-50" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_25%_50%,var(--bg)_25%,color-mix(in_oklch,var(--bg)_70%,transparent)_60%,var(--bg)_100%)]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg to-transparent" />
+      <PortalHero className="absolute inset-0" />
+      {/* Escurece só o lado do texto; no celular, o portal fica atrás e mais apagado. */}
+      <div className="pointer-events-none absolute inset-0 bg-bg/55 md:bg-transparent md:bg-gradient-to-r md:from-bg md:via-bg/50 md:to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-bg to-transparent" />
       <div className="relative mx-auto w-full max-w-6xl px-4 pt-24">
-        <Reveal>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{t.hero.eyebrow}</p>
-        </Reveal>
         <Reveal delay={0.08}>
-          <h1 className="mt-5 text-5xl font-semibold leading-[1.05] tracking-tighter md:text-7xl">
+          <h1 className="text-5xl font-semibold leading-[1.05] tracking-tighter md:text-7xl">
             {perfil.nome}
             <br />
             <Typewriter palavras={t.hero.papeis} />
@@ -138,7 +121,6 @@ function Sobre({ t }: { t: Dicionario }) {
           </Reveal>
         </div>
         <Reveal delay={0.1} className="relative mx-auto w-full max-w-sm">
-          <div className="absolute -inset-6 -z-10 rounded-full bg-[radial-gradient(circle_at_50%_40%,color-mix(in_oklch,var(--accent)_35%,transparent),transparent_70%)] blur-2xl" />
           <div className="overflow-hidden rounded-full border border-line p-2 shadow-[var(--shadow)]">
             <Image src={perfil.foto} alt={perfil.nome} width={720} height={720} className="aspect-square w-full rounded-full object-cover" />
           </div>
@@ -164,18 +146,10 @@ function Solucoes({ t }: { t: Dicionario }) {
     <section id="solucoes" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
       <Scramble texto={s.titulo} className="text-4xl font-semibold tracking-tighter md:text-5xl" />
       <p className="mt-4 max-w-[60ch] text-lg text-muted">{s.sub}</p>
-      <div className="mt-12 grid gap-4 md:grid-cols-2">
+      <div className="mt-12 grid gap-4 md:grid-cols-3">
         {s.lista.map((item, i) => (
-          <Reveal key={item.titulo} delay={(i % 2) * 0.06}>
-            <article
-              className={`group flex h-full gap-5 rounded-2xl border border-line p-7 transition-colors hover:border-accent ${
-                i === 0
-                  ? "bg-[radial-gradient(circle_at_100%_0%,color-mix(in_oklch,var(--accent)_18%,transparent),transparent_65%)] bg-elev"
-                  : i === 3
-                    ? "bg-[linear-gradient(135deg,color-mix(in_oklch,var(--accent)_10%,var(--bg-elev)),var(--bg-elev))]"
-                    : "bg-elev"
-              }`}
-            >
+          <Reveal key={item.titulo} delay={i * 0.06}>
+            <article className="group flex h-full flex-col gap-5 rounded-2xl border border-line bg-elev p-7 transition-colors hover:border-accent">
               <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-bg text-accent transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110">
                 <Icone nome={item.icone} size={24} />
               </span>
@@ -240,7 +214,7 @@ async function GithubPublico({ t, lang }: { t: Dicionario; lang: Locale }) {
       ) : (
         <div className="mt-10 grid gap-4 md:grid-cols-4">
           <Reveal className="md:col-span-2 md:row-span-2">
-            <div className="flex h-full flex-col justify-between gap-8 rounded-2xl border border-line bg-[radial-gradient(circle_at_100%_0%,color-mix(in_oklch,var(--accent)_22%,transparent),transparent_60%)] bg-elev p-8">
+            <div className="flex h-full flex-col justify-between gap-8 rounded-2xl border border-line bg-elev p-8">
               <div className="flex items-center gap-3">
                 <GithubLogo size={28} />
                 <span className="font-mono">@{perfil.github}</span>

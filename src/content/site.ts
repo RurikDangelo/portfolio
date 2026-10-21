@@ -41,7 +41,7 @@ type Solucao = { icone: Icone; titulo: string; texto: string };
 type Dicionario = {
   meta: { titulo: string; descricao: string };
   nav: { sobre: string; solucoes: string; projetos: string; trajetoria: string; cta: string };
-  hero: { eyebrow: string; papeis: string[]; sub: string; verProjetos: string; verSolucoes: string };
+  hero: { papeis: string[]; sub: string; verProjetos: string; verSolucoes: string };
   sobre: { titulo: string; texto: string[]; cv: string; destaques: { valor: string; rotulo: string }[] };
   solucoes: { titulo: string; sub: string; lista: Solucao[] };
   automacoes: { titulo: string; sub: string; fluxos: Fluxo[] };
@@ -99,14 +99,13 @@ const imagens = {
 
 const pt: Dicionario = {
   meta: {
-    titulo: "Rurik D'Angelo | Head de Tecnologia, IA e SaaS",
-    descricao: "SaaS, IA aplicada e projetos técnicos para engenheiros.",
+    titulo: "Rurik D'Angelo | IA e SaaS",
+    descricao: "Plataformas SaaS e IA aplicada que rodam em produção.",
   },
   nav: { sobre: "Sobre", solucoes: "O que construo", projetos: "Projetos", trajetoria: "Trajetória", cta: "Fale comigo" },
   hero: {
-    eyebrow: "Head de Tecnologia",
     papeis: ["Especialista em IA", "Engenheiro de LLM", "Machine Learning", "Arquiteto de SaaS"],
-    sub: "Construo plataformas SaaS, automações com IA e projetos técnicos para engenheiros.",
+    sub: "Construo plataformas SaaS e soluções com IA que rodam em produção.",
     verProjetos: "Ver projetos",
     verSolucoes: "O que construo",
   },
@@ -115,7 +114,6 @@ const pt: Dicionario = {
     texto: [
       "Meu interesse por programação começou aos 15 anos, escrevendo meus primeiros programas em Java. A curiosidade de entender como o software funciona por dentro virou profissão.",
       "Hoje sou Head de Tecnologia, formado em Ciência da Computação e especialista em IA, LLM e Machine Learning. Já desenvolvi plataformas SaaS completas do zero, da arquitetura e do banco de dados até a interface e a venda para os clientes.",
-      "Também desenvolvo projetos técnicos para engenheiros, como sistemas de laudos e avaliações, onde a precisão do dado vale tanto quanto a velocidade.",
     ],
     cv: "Baixar CV",
     destaques: [
@@ -130,7 +128,6 @@ const pt: Dicionario = {
     lista: [
       { icone: "cart", titulo: "Plataformas SaaS", texto: "ERP e CRM multi-tenant, com vendas, estoque, financeiro, fiscal e atendimento integrados." },
       { icone: "robot", titulo: "IA aplicada", texto: "Agentes que leem documentos, respondem clientes e executam tarefas, com revisão humana onde importa." },
-      { icone: "ruler", titulo: "Projetos para engenharia", texto: "Sistemas de laudos, avaliações e relatórios técnicos, do levantamento de campo ao PDF aprovado." },
       { icone: "plug", titulo: "Dados e integrações", texto: "APIs, painéis de indicadores e migração de dados de planilhas e sistemas antigos." },
     ],
   },
@@ -149,13 +146,13 @@ const pt: Dicionario = {
         ],
       },
       {
-        id: "engenharia",
-        nome: "Triagem para engenharia",
+        id: "documentos",
+        nome: "Leitura de documentos",
         passos: [
-          { icone: "camera", titulo: "Arquivos chegam", texto: "Fotos e documentos do cliente." },
+          { icone: "camera", titulo: "Arquivos chegam", texto: "Fotos, PDFs e planilhas." },
           { icone: "scan", titulo: "IA extrai os dados", texto: "E aponta o que está faltando." },
-          { icone: "doc", titulo: "Rascunho do laudo", texto: "Preenchido com amostras e dados." },
-          { icone: "seal", titulo: "Engenheiro aprova", texto: "Revisa, ajusta e assina." },
+          { icone: "doc", titulo: "Registra no sistema", texto: "Sem ninguém redigitar nada." },
+          { icone: "seal", titulo: "Equipe revisa", texto: "Confere e aprova em um clique." },
         ],
       },
     ],
@@ -213,23 +210,15 @@ const pt: Dicionario = {
         slug: "plataforma",
         titulo: "Plataforma ERP e CRM white label",
         resumo: "Varejo, assistência técnica e locação numa plataforma multi-tenant, com CRM no WhatsApp e IA.",
-        pontos: [
-          "Mais de 150 rotas entre ERP, CRM e painel da plataforma",
-          "Isolamento por empresa e por loja direto no banco",
-          "Consulta reescrita de 149 ms para 6,9 ms",
-        ],
+        pontos: ["Mais de 150 rotas numa única plataforma", "CRM no WhatsApp com IA"],
         stack: ["Next.js", "React", "PostgreSQL", "Supabase", "Tailwind"],
         imagem: imagens.plataforma,
       },
       {
         slug: "laudos",
-        titulo: "Laudos técnicos para engenharia",
-        resumo: "Sistema para engenheiros montarem, acompanharem e aprovarem laudos de avaliação.",
-        pontos: [
-          "Tempo médio de montagem medido por laudo",
-          "Mapa de atuação por coordenada ou município",
-          "Amostras, zoneamento e clientes integrados",
-        ],
+        titulo: "Sistema de laudos técnicos",
+        resumo: "Montagem, acompanhamento e aprovação de laudos, com mapa e indicadores.",
+        pontos: ["Indicadores de produção em tempo real", "Mapa de atuação"],
         stack: ["Next.js", "PostgreSQL", "Mapas", "PDF"],
         imagem: imagens.laudos,
       },
@@ -237,7 +226,7 @@ const pt: Dicionario = {
         slug: "verticais",
         titulo: "Sistemas verticais sob medida",
         resumo: "Gestão construída em torno do processo de cada negócio, do orçamento à entrega.",
-        pontos: ["Produção guiada por ordem de serviço", "PDV com ficha técnica e baixa de insumos", "App offline para equipes em campo"],
+        pontos: ["Produção por ordem de serviço", "App offline para equipes em campo"],
         stack: ["Next.js", "React", "Prisma", "PWA"],
         imagem: imagens.verticais,
       },
@@ -253,22 +242,21 @@ const pt: Dicionario = {
   },
   contato: {
     titulo: "Vamos construir algo real",
-    texto: "Aberto a conversar sobre SaaS, IA aplicada e sistemas para engenharia.",
+    texto: "Aberto a conversar sobre SaaS e IA aplicada.",
     foco: "Foco",
-    focoValor: "IA, LLM, Machine Learning, SaaS e projetos técnicos para engenheiros",
+    focoValor: "IA, LLM, Machine Learning e SaaS",
   },
 };
 
 const en: Dicionario = {
   meta: {
-    titulo: "Rurik D'Angelo | Head of Technology, AI and SaaS",
-    descricao: "SaaS, applied AI and technical projects for engineers.",
+    titulo: "Rurik D'Angelo | AI and SaaS",
+    descricao: "SaaS platforms and applied AI running in production.",
   },
   nav: { sobre: "About", solucoes: "What I build", projetos: "Projects", trajetoria: "Journey", cta: "Get in touch" },
   hero: {
-    eyebrow: "Head of Technology",
     papeis: ["AI Specialist", "LLM Engineer", "Machine Learning", "SaaS Architect"],
-    sub: "I build SaaS platforms, AI automations and technical projects for engineers.",
+    sub: "I build SaaS platforms and AI solutions that run in production.",
     verProjetos: "View projects",
     verSolucoes: "What I build",
   },
@@ -277,7 +265,6 @@ const en: Dicionario = {
     texto: [
       "My interest in programming started at 15, writing my first programs in Java. The curiosity to understand how software works inside became a career.",
       "Today I am a Head of Technology with a degree in Computer Science and a specialist in AI, LLMs and Machine Learning. I have built complete SaaS platforms from scratch, from architecture and database to the interface and selling them to customers.",
-      "I also build technical projects for engineers, such as report and appraisal systems, where data accuracy matters as much as speed.",
     ],
     cv: "Download CV",
     destaques: [
@@ -292,7 +279,6 @@ const en: Dicionario = {
     lista: [
       { icone: "cart", titulo: "SaaS platforms", texto: "Multi-tenant ERP and CRM with sales, inventory, finance, tax and customer service working together." },
       { icone: "robot", titulo: "Applied AI", texto: "Agents that read documents, answer customers and run tasks, with human review where it matters." },
-      { icone: "ruler", titulo: "Engineering projects", texto: "Systems for reports, appraisals and technical documents, from field survey to the approved PDF." },
       { icone: "plug", titulo: "Data and integrations", texto: "APIs, KPI dashboards and data migration from spreadsheets and legacy systems." },
     ],
   },
@@ -311,13 +297,13 @@ const en: Dicionario = {
         ],
       },
       {
-        id: "engenharia",
-        nome: "Engineering intake",
+        id: "documentos",
+        nome: "Document reading",
         passos: [
-          { icone: "camera", titulo: "Files arrive", texto: "Customer photos and documents." },
+          { icone: "camera", titulo: "Files arrive", texto: "Photos, PDFs and spreadsheets." },
           { icone: "scan", titulo: "AI extracts the data", texto: "And flags what is missing." },
-          { icone: "doc", titulo: "Report draft", texto: "Filled with samples and data." },
-          { icone: "seal", titulo: "Engineer approves", texto: "Reviews, adjusts and signs." },
+          { icone: "doc", titulo: "Saves to the system", texto: "Nobody types anything twice." },
+          { icone: "seal", titulo: "Team reviews", texto: "Checks and approves in one click." },
         ],
       },
     ],
@@ -375,28 +361,20 @@ const en: Dicionario = {
         ...pt.projetos.lista[0],
         titulo: "White label ERP and CRM platform",
         resumo: "Retail, repair services and rentals on a multi-tenant platform, with a WhatsApp CRM and AI.",
-        pontos: [
-          "Over 150 routes across ERP, CRM and the platform panel",
-          "Per-company and per-store isolation inside the database",
-          "Query rewritten from 149 ms to 6.9 ms",
-        ],
+        pontos: ["Over 150 routes in a single platform", "WhatsApp CRM with AI"],
       },
       {
         ...pt.projetos.lista[1],
-        titulo: "Technical reports for engineering",
-        resumo: "A system for engineers to build, track and approve appraisal reports.",
-        pontos: [
-          "Average assembly time measured per report",
-          "Coverage map by coordinates or municipality",
-          "Samples, zoning and clients in one place",
-        ],
+        titulo: "Technical reports system",
+        resumo: "Building, tracking and approving reports, with a map and KPIs.",
+        pontos: ["Real-time production KPIs", "Coverage map"],
         stack: ["Next.js", "PostgreSQL", "Maps", "PDF"],
       },
       {
         ...pt.projetos.lista[2],
         titulo: "Custom vertical systems",
         resumo: "Management built around each business's process, from quote to delivery.",
-        pontos: ["Production driven by work orders", "POS with recipes and supply deduction", "Offline app for field teams"],
+        pontos: ["Work-order driven production", "Offline app for field teams"],
       },
       {
         ...pt.projetos.lista[3],
@@ -408,9 +386,9 @@ const en: Dicionario = {
   },
   contato: {
     titulo: "Let's build something real",
-    texto: "Open to talk about SaaS, applied AI and engineering systems.",
+    texto: "Open to talk about SaaS and applied AI.",
     foco: "Focus",
-    focoValor: "AI, LLM, Machine Learning, SaaS and technical projects for engineers",
+    focoValor: "AI, LLM, Machine Learning and SaaS",
   },
 };
 
