@@ -11,7 +11,7 @@ export const perfil = {
   github: "RurikDangelo",
   linkedin: "https://www.linkedin.com/in/rurik-d-angelo-626492221",
   email: "",
-  foto: "/sobre.webp",
+  foto: "/sobre-v2.webp",
 };
 
 // Fotos do Unsplash (licença livre), servidas direto do CDN deles.
@@ -92,8 +92,8 @@ export { stackGrupos };
 
 const imagens = {
   plataforma: foto("1460925895917-afdab827c52f"),
-  painel: foto("1763718528755-4bca23f82ac3"),
-  sobMedida: foto("1542744173-05336fcc7ad4"),
+  painel: foto("1551650975-87deedd944c3"),
+  sobMedida: foto("1499951360447-b19be8fe80f5"),
 };
 
 const pt: Dicionario = {
