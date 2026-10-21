@@ -9,7 +9,7 @@ export const hasLocale = (v: string): v is Locale => (locales as readonly string
 export const perfil = {
   nome: "Rurik D'Angelo",
   github: "RurikDangelo",
-  linkedin: "", // preenchido a partir do LinkedIn
+  linkedin: "https://www.linkedin.com/in/rurik-d-angelo-626492221",
   email: "",
   avatar: "https://avatars.githubusercontent.com/u/98221730?v=4",
 };
@@ -63,15 +63,15 @@ const stackGrupos = [
   },
   {
     grupo: { pt: "Produto e front-end", en: "Product and front-end" },
-    itens: ["TypeScript", "Next.js", "React", "Tailwind CSS", "Astro", "Three.js", "GLSL", "PWA"],
+    itens: ["TypeScript", "Next.js", "React", "Blazor", "Radzen", "Tailwind CSS", "Astro", "Three.js", "GLSL", "PWA"],
   },
   {
     grupo: { pt: "Dados e back-end", en: "Data and back-end" },
-    itens: ["PostgreSQL", "Supabase", "Row Level Security", "Prisma", "Node.js", "Bun", "C# .NET", "WhatsApp API"],
+    itens: ["C#", ".NET", "ASP.NET", "REST APIs", "PostgreSQL", "Supabase", "Row Level Security", "Prisma", "Node.js", "Bun", "WhatsApp API"],
   },
   {
     grupo: { pt: "Infra", en: "Infra" },
-    itens: ["Vercel", "Docker", "Git", "CI", "Traefik"],
+    itens: ["Microsoft Azure", "Vercel", "Docker", "Git", "CI", "Traefik"],
   },
 ];
 export { stackGrupos };
@@ -91,8 +91,8 @@ const pt: Dicionario = {
   sobre: {
     titulo: "Software que aguenta o dia a dia",
     texto: [
-      "Sou desenvolvedor de SaaS e especialista em IA, LLM e Machine Learning. Trabalho do banco de dados à interface, com foco em sistemas que empresas reais usam o dia inteiro.",
-      "Hoje lidero a engenharia do NIT, uma plataforma multi-tenant de ERP e CRM, e fundei a Tivexy, onde construo sistemas sob medida, automação e inteligência artificial para empresas.",
+      "Sou formado em Ciência da Computação, desenvolvedor de SaaS e especialista em IA, LLM e Machine Learning. Trabalho do banco de dados à interface, em C# .NET e no ecossistema TypeScript, com foco em sistemas que empresas reais usam o dia inteiro.",
+      "Hoje desenvolvo o NIT, uma plataforma multi-tenant de ERP e CRM, e fundei a Tivexy, onde construo sistemas sob medida, automação e inteligência artificial para empresas.",
     ],
     cv: "Baixar CV",
   },
@@ -100,8 +100,9 @@ const pt: Dicionario = {
   experiencia: {
     titulo: "Onde trabalhei",
     itens: [
-      { cargo: "Fundador e CEO", empresa: "Tivexy", periodo: "2026 - hoje", tags: ["SaaS", "IA aplicada", "Automação"] },
-      { cargo: "Engenheiro de Software", empresa: "NIT Technology", periodo: "2026 - hoje", tags: ["ERP", "CRM", "Multi-tenant", "Supabase"] },
+      { cargo: "Desenvolvedor Web Júnior", empresa: "NIT Technology", periodo: "jul. 2026 - hoje", tags: ["ERP", "CRM", "Multi-tenant", "IA aplicada", "Next.js", "Supabase"] },
+      { cargo: "Estagiário de Inovação", empresa: "Poliedro Educação", periodo: "abr. 2025 - jul. 2026", tags: ["Inovação", "Desenvolvimento de software", "Remoto"] },
+      { cargo: "Estagiário", empresa: "Back4App", periodo: "mai. 2024 - nov. 2024", tags: ["Android", "Backend as a Service", "Suporte técnico"] },
     ],
   },
   github: {
@@ -193,8 +194,8 @@ const en: Dicionario = {
   sobre: {
     titulo: "Software that survives the daily grind",
     texto: [
-      "I am a SaaS developer and a specialist in AI, LLMs and Machine Learning. I work from the database to the interface, focused on systems real businesses use all day long.",
-      "Today I lead engineering at NIT, a multi-tenant ERP and CRM platform, and I founded Tivexy, where I build custom systems, automation and artificial intelligence for companies.",
+      "I hold a degree in Computer Science and I am a SaaS developer and a specialist in AI, LLMs and Machine Learning. I work from the database to the interface, in C# .NET and the TypeScript ecosystem, focused on systems real businesses use all day long.",
+      "Today I build NIT, a multi-tenant ERP and CRM platform, and I founded Tivexy, where I build custom systems, automation and artificial intelligence for companies.",
     ],
     cv: "Download CV",
   },
@@ -202,8 +203,9 @@ const en: Dicionario = {
   experiencia: {
     titulo: "Where I have worked",
     itens: [
-      { cargo: "Founder and CEO", empresa: "Tivexy", periodo: "2026 - present", tags: ["SaaS", "Applied AI", "Automation"] },
-      { cargo: "Software Engineer", empresa: "NIT Technology", periodo: "2026 - present", tags: ["ERP", "CRM", "Multi-tenant", "Supabase"] },
+      { cargo: "Junior Web Developer", empresa: "NIT Technology", periodo: "Jul 2026 - present", tags: ["ERP", "CRM", "Multi-tenant", "Applied AI", "Next.js", "Supabase"] },
+      { cargo: "Innovation Intern", empresa: "Poliedro Educação", periodo: "Apr 2025 - Jul 2026", tags: ["Innovation", "Software development", "Remote"] },
+      { cargo: "Intern", empresa: "Back4App", periodo: "May 2024 - Nov 2024", tags: ["Android", "Backend as a Service", "Technical support"] },
     ],
   },
   github: {
