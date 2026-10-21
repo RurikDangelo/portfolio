@@ -10,6 +10,7 @@ export const perfil = {
   nome: "Rurik D'Angelo",
   github: "RurikDangelo",
   linkedin: "https://www.linkedin.com/in/rurik-d-angelo-626492221",
+  whatsapp: "5512991586409",
   email: "",
   foto: "/sobre-v4.webp",
 };
@@ -42,7 +43,7 @@ type Dicionario = {
   sobre: { titulo: string; texto: string[]; fotoAlt: string };
   solucoes: { titulo: string; sub: string; lista: Solucao[] };
   automacoes: { titulo: string; sub: string; fluxos: Fluxo[] };
-  stack: { titulo: string; rapido: string; detalhe: string };
+  stack: { titulo: string };
   trajetoria: { titulo: string; itens: Etapa[] };
   github: {
     titulo: string;
@@ -60,7 +61,7 @@ type Dicionario = {
     mais: string;
   };
   projetos: { titulo: string; aviso: string; lista: Projeto[] };
-  contato: { titulo: string; texto: string; foco: string; focoValor: string };
+  contato: { titulo: string; texto: string; foco: string; focoValor: string; whatsapp: string; mensagem: string };
 };
 
 const stackGrupos = [
@@ -143,7 +144,7 @@ const pt: Dicionario = {
       },
     ],
   },
-  stack: { titulo: "Ferramentas do dia a dia", rapido: "Rápido", detalhe: "Detalhe" },
+  stack: { titulo: "Ferramentas do dia a dia" },
   trajetoria: {
     titulo: "Trajetória",
     itens: [
@@ -221,6 +222,8 @@ const pt: Dicionario = {
   contato: {
     titulo: "Vamos construir algo real",
     texto: "Tem um processo que merece virar sistema? Vamos conversar.",
+    whatsapp: "Chamar no WhatsApp",
+    mensagem: "Olá, Rurik! Vi seu portfólio e quero conversar sobre um sistema.",
     foco: "Foco",
     focoValor: "Sistemas sob medida, IA, LLM e Machine Learning",
   },
@@ -282,7 +285,7 @@ const en: Dicionario = {
       },
     ],
   },
-  stack: { titulo: "Everyday tools", rapido: "Quick", detalhe: "Detail" },
+  stack: { titulo: "Everyday tools" },
   trajetoria: {
     titulo: "Journey",
     itens: [
@@ -355,6 +358,8 @@ const en: Dicionario = {
   contato: {
     titulo: "Let's build something real",
     texto: "Got a process that deserves to become a system? Let's talk.",
+    whatsapp: "Message me on WhatsApp",
+    mensagem: "Hi Rurik! I saw your portfolio and would like to talk about a system.",
     foco: "Focus",
     focoValor: "Custom systems, AI, LLM and Machine Learning",
   },

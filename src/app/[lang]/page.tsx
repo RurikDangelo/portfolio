@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowDown, ArrowUpRight, GithubLogo, LinkedinLogo, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
+import { ArrowDown, ArrowUpRight, GithubLogo, LinkedinLogo, EnvelopeSimple, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { dicionarios, hasLocale, perfil, stackGrupos, type Dicionario, type Locale } from "@/content/site";
 import { resumoGithub } from "@/lib/github";
 import { Nav } from "@/components/nav";
@@ -9,7 +9,6 @@ import { PortalHero } from "@/components/portal-hero";
 import { Typewriter } from "@/components/typewriter";
 import { Scramble } from "@/components/scramble";
 import { Reveal } from "@/components/reveal";
-import { StackToggle } from "@/components/stack-toggle";
 import { ProjectsPan } from "@/components/projects-pan";
 import { Heatmap } from "@/components/heatmap";
 import { Automacoes } from "@/components/automacoes";
@@ -31,7 +30,16 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <ProjectsPan titulo={t.projetos.titulo} aviso={t.projetos.aviso} projetos={t.projetos.lista} lang={lang} />
         <section id="stack" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
           <Scramble texto={t.stack.titulo} className="mb-10 text-4xl font-semibold tracking-tighter md:text-5xl" />
-          <StackToggle grupos={stackGrupos} lang={lang} rotulos={t.stack} />
+          <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {stackGrupos.map((g, i) => (
+              <Reveal key={g.grupo.pt} delay={i * 0.06}>
+                <div className="border-t border-line pt-4">
+                  <h3 className="font-mono text-xs text-accent">{g.grupo[lang]}</h3>
+                  <p className="mt-3 text-base leading-relaxed text-muted">{g.itens.join(", ")}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </section>
         <Trajetoria t={t} />
         <Suspense fallback={<GithubEsqueleto t={t} />}>
@@ -274,7 +282,16 @@ function Contato({ t }: { t: Dicionario }) {
           <p className="mt-6 max-w-[50ch] text-lg text-muted">{t.contato.texto}</p>
         </Reveal>
         <Reveal delay={0.1}>
-          <ul className="mt-10 flex flex-wrap gap-3">
+          <a
+            href={`https://wa.me/${perfil.whatsapp}?text=${encodeURIComponent(t.contato.mensagem)}`}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-10 inline-flex h-14 items-center gap-3 rounded-full bg-accent px-7 text-lg font-medium text-accent-ink transition-transform duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+          >
+            <WhatsappLogo size={22} weight="fill" />
+            {t.contato.whatsapp}
+          </a>
+          <ul className="mt-6 flex flex-wrap gap-3">
             {links.map(({ href, rotulo, Icone: Ic }) => (
               <li key={rotulo}>
                 <a
