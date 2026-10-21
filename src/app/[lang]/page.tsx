@@ -28,7 +28,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Faixa />
         <Sobre t={t} />
         <Solucoes t={t} />
-        <ProjectsPan titulo={t.projetos.titulo} aviso={t.projetos.aviso} projetos={t.projetos.lista} />
+        <ProjectsPan titulo={t.projetos.titulo} aviso={t.projetos.aviso} projetos={t.projetos.lista} lang={lang} />
         <section id="stack" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
           <Scramble texto={t.stack.titulo} className="mb-10 text-4xl font-semibold tracking-tighter md:text-5xl" />
           <StackToggle grupos={stackGrupos} lang={lang} rotulos={t.stack} />

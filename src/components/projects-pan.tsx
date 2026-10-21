@@ -1,16 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import type { Projeto } from "@/content/site";
+import type { Locale, Projeto } from "@/content/site";
+import { textosDemo } from "@/content/demos";
+import { DemoGestao } from "./demos/demo-gestao";
+import { DemoOperacional } from "./demos/demo-operacional";
+import { DemoSobMedida } from "./demos/demo-sob-medida";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Do md para cima, a rolagem vertical desliza os projetos na horizontal (seção fixada).
 // No celular e com movimento reduzido, viram uma lista vertical comum.
-export function ProjectsPan({ titulo, aviso, projetos }: { titulo: string; aviso: string; projetos: Projeto[] }) {
+export function ProjectsPan({ titulo, aviso, projetos, lang }: { titulo: string; aviso: string; projetos: Projeto[]; lang: Locale }) {
+  const d = textosDemo[lang];
   const wrap = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
@@ -31,9 +35,6 @@ export function ProjectsPan({ titulo, aviso, projetos }: { titulo: string; aviso
           invalidateOnRefresh: true,
         },
       });
-      gsap.utils.toArray<HTMLElement>(".projeto-img").forEach((img) => {
-        gsap.fromTo(img, { scale: 1.15 }, { scale: 1, ease: "none", scrollTrigger: { trigger: wrap.current, start: "top top", end: () => `+=${distancia()}`, scrub: true } });
-      });
     });
     return () => mm.revert();
   }, []);
@@ -48,22 +49,18 @@ export function ProjectsPan({ titulo, aviso, projetos }: { titulo: string; aviso
         {projetos.map((p) => (
           <article
             key={p.slug}
-            className="group relative flex shrink-0 flex-col overflow-hidden rounded-2xl border border-line bg-elev md:h-[72dvh] md:w-[min(46vw,640px)]"
+            className="group relative flex shrink-0 flex-col overflow-hidden rounded-2xl border border-line bg-elev md:h-[82dvh] md:w-[min(50vw,700px)]"
           >
-            <div className="relative aspect-[16/10] overflow-hidden md:aspect-auto md:flex-1">
-              <Image
-                src={p.imagem}
-                alt=""
-                fill
-                sizes="(min-width: 768px) 46vw, 100vw"
-                className="projeto-img object-cover opacity-90 transition duration-700 group-hover:opacity-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-elev via-elev/20 to-transparent" />
+            {/* Demo interativa no lugar da imagem: altura fixa no celular, ocupa o espaço no desktop. */}
+            <div className="relative h-[340px] p-3 md:h-auto md:min-h-0 md:flex-1 md:p-4">
+              {p.demo === "gestao" && <DemoGestao t={d.gestao} aviso={d.aviso} lang={lang} />}
+              {p.demo === "operacional" && <DemoOperacional t={d.operacional} aviso={d.aviso} />}
+              {p.demo === "sobMedida" && <DemoSobMedida t={d.sobMedida} aviso={d.aviso} />}
             </div>
-            <div className="relative p-6 md:p-8">
-              <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">{p.titulo}</h3>
-              <p className="mt-3 max-w-[52ch] text-muted">{p.resumo}</p>
-              <ul className="mt-4 space-y-1.5 text-sm">
+            <div className="relative px-6 pb-6 pt-2 md:px-7 md:pb-7">
+              <h3 className="text-2xl font-semibold tracking-tight">{p.titulo}</h3>
+              <p className="mt-2 max-w-[56ch] text-sm text-muted">{p.resumo}</p>
+              <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
                 {p.pontos.map((ponto) => (
                   <li key={ponto} className="flex gap-2">
                     <span className="text-accent">+</span>
@@ -71,7 +68,7 @@ export function ProjectsPan({ titulo, aviso, projetos }: { titulo: string; aviso
                   </li>
                 ))}
               </ul>
-              <div className="mt-5 flex flex-wrap items-center gap-2">
+              <div className="mt-4 flex flex-wrap items-center gap-2">
                 {p.stack.map((s) => (
                   <span key={s} className="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted">
                     {s}

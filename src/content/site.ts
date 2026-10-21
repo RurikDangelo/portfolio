@@ -1,6 +1,6 @@
 // Todo texto visível do site, nos dois idiomas. Nenhum componente escreve copy própria.
 // Regra de privacidade: nenhum nome de produto ou cliente e nenhum print de sistema real;
-// as imagens dos projetos são fotos ilustrativas do Unsplash.
+// os projetos são mostrados por demos interativas com dados fictícios (src/content/demos.ts).
 
 export const locales = ["pt", "en"] as const;
 export type Locale = (typeof locales)[number];
@@ -11,11 +11,8 @@ export const perfil = {
   github: "RurikDangelo",
   linkedin: "https://www.linkedin.com/in/rurik-d-angelo-626492221",
   email: "",
-  foto: "/sobre-v2.webp",
+  foto: "/sobre-v3.webp",
 };
-
-// Fotos do Unsplash (licença livre), servidas direto do CDN deles.
-const foto = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1400&q=70`;
 
 type Projeto = {
   slug: string;
@@ -23,7 +20,7 @@ type Projeto = {
   resumo: string;
   pontos: string[];
   stack: string[];
-  imagem: string;
+  demo: "gestao" | "operacional" | "sobMedida";
 };
 
 type Etapa = { titulo: string; onde: string; texto: string; tags: string[] };
@@ -89,12 +86,6 @@ const stackGrupos = [
   },
 ];
 export { stackGrupos };
-
-const imagens = {
-  plataforma: foto("1460925895917-afdab827c52f"),
-  painel: foto("1551650975-87deedd944c3"),
-  sobMedida: foto("1499951360447-b19be8fe80f5"),
-};
 
 const pt: Dicionario = {
   meta: {
@@ -199,7 +190,7 @@ const pt: Dicionario = {
   },
   projetos: {
     titulo: "Projetos selecionados",
-    aviso: "Imagens ilustrativas: os sistemas reais guardam dados de clientes.",
+    aviso: "Interaja com as demonstrações: os sistemas reais guardam dados de clientes, então aqui os dados são fictícios.",
     lista: [
       {
         slug: "plataforma",
@@ -207,7 +198,7 @@ const pt: Dicionario = {
         resumo: "Vendas, estoque, financeiro e atendimento no WhatsApp numa só plataforma, atendendo várias empresas ao mesmo tempo.",
         pontos: ["Multiempresa e white label", "CRM com IA"],
         stack: ["Next.js", "React", "PostgreSQL", "Supabase"],
-        imagem: imagens.plataforma,
+        demo: "gestao",
       },
       {
         slug: "painel",
@@ -215,7 +206,7 @@ const pt: Dicionario = {
         resumo: "Acompanhamento de processos técnicos, com indicadores, prazos e mapa de atuação.",
         pontos: ["Indicadores em tempo real", "Alertas de prazo"],
         stack: ["Next.js", "PostgreSQL", "Mapas"],
-        imagem: imagens.painel,
+        demo: "operacional",
       },
       {
         slug: "sob-medida",
@@ -223,7 +214,7 @@ const pt: Dicionario = {
         resumo: "Gestão construída em torno do processo de cada negócio, em qualquer nicho.",
         pontos: ["Do orçamento à entrega", "App offline para equipes em campo"],
         stack: ["Next.js", "React", "Prisma", "PWA"],
-        imagem: imagens.sobMedida,
+        demo: "sobMedida",
       },
     ],
   },
@@ -338,7 +329,7 @@ const en: Dicionario = {
   },
   projetos: {
     titulo: "Selected projects",
-    aviso: "Illustrative images: the real systems hold customer data.",
+    aviso: "Play with the demos: the real systems hold customer data, so the data here is fictitious.",
     lista: [
       {
         ...pt.projetos.lista[0],
