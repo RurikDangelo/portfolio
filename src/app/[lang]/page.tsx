@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowDown, ArrowUpRight, GithubLogo, LinkedinLogo, EnvelopeSimple, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
+import { ArrowDown, ArrowUpRight, GithubLogo, LinkedinLogo, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 import { dicionarios, hasLocale, perfil, stackGrupos, type Dicionario, type Locale } from "@/content/site";
 import { resumoGithub } from "@/lib/github";
 import { Nav } from "@/components/nav";
@@ -101,41 +101,27 @@ function Faixa() {
 
 function Sobre({ t }: { t: Dicionario }) {
   return (
-    <section id="sobre" className="mx-auto max-w-6xl px-4 py-24 md:py-32">
-      <div className="grid gap-12 md:grid-cols-[1.4fr_1fr] md:items-center">
-        <div>
-          <Scramble texto={t.sobre.titulo} className="text-4xl font-semibold leading-[1.1] tracking-tighter md:text-5xl" />
-          {t.sobre.texto.map((p, i) => (
-            <Reveal key={i} delay={i * 0.08}>
-              <p className="mt-6 max-w-[60ch] text-lg leading-relaxed text-muted">{p}</p>
-            </Reveal>
-          ))}
-          <Reveal delay={0.2}>
-            <a
-              href="/cv.pdf"
-              className="mt-8 inline-flex h-12 items-center gap-2 rounded-full border border-line px-6 font-medium transition-colors hover:border-accent hover:text-accent"
-            >
-              {t.sobre.cv}
-              <DownloadSimple size={18} />
-            </a>
-          </Reveal>
-        </div>
-        <Reveal delay={0.1} className="relative mx-auto w-full max-w-sm">
-          <div className="overflow-hidden rounded-full border border-line p-2 shadow-[var(--shadow)]">
-            <Image src={perfil.foto} alt={perfil.nome} width={720} height={720} className="aspect-square w-full rounded-full object-cover" />
-          </div>
-        </Reveal>
-      </div>
-      <div className="mt-16 grid gap-4 sm:grid-cols-3">
-        {t.sobre.destaques.map((d, i) => (
-          <Reveal key={d.rotulo} delay={i * 0.06}>
-            <div className="h-full border-t border-line pt-5">
-              <p className="text-4xl font-semibold tracking-tighter text-accent md:text-5xl">{d.valor}</p>
-              <p className="mt-2 text-muted">{d.rotulo}</p>
-            </div>
+    <section id="sobre" className="mx-auto grid max-w-6xl gap-12 px-4 py-24 md:grid-cols-[1fr_1.15fr] md:items-center md:py-32">
+      <div>
+        <Scramble texto={t.sobre.titulo} className="text-4xl font-semibold leading-[1.1] tracking-tighter md:text-5xl" />
+        {t.sobre.texto.map((p, i) => (
+          <Reveal key={i} delay={i * 0.08}>
+            <p className="mt-6 max-w-[60ch] text-lg leading-relaxed text-muted">{p}</p>
           </Reveal>
         ))}
       </div>
+      <Reveal delay={0.1}>
+        <div className="overflow-hidden rounded-2xl border border-line shadow-[var(--shadow)]">
+          <Image
+            src={perfil.foto}
+            alt={t.sobre.fotoAlt}
+            width={1536}
+            height={1024}
+            sizes="(min-width: 768px) 55vw, 100vw"
+            className="aspect-[3/2] w-full object-cover"
+          />
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Waveform } from "@phosphor-icons/react";
 import type { Projeto } from "@/content/site";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -52,20 +51,13 @@ export function ProjectsPan({ titulo, aviso, projetos }: { titulo: string; aviso
             className="group relative flex shrink-0 flex-col overflow-hidden rounded-2xl border border-line bg-elev md:h-[72dvh] md:w-[min(46vw,640px)]"
           >
             <div className="relative aspect-[16/10] overflow-hidden md:aspect-auto md:flex-1">
-              {p.imagem ? (
-                <Image
-                  src={p.imagem}
-                  alt={p.titulo}
-                  fill
-                  sizes="(min-width: 768px) 46vw, 100vw"
-                  className="projeto-img object-cover object-left-top opacity-85 transition duration-700 group-hover:opacity-100"
-                />
-              ) : (
-                // Sem print público: um painel com a cor da marca no lugar da imagem.
-                <div className="projeto-img grid size-full place-items-center bg-[radial-gradient(circle_at_50%_60%,color-mix(in_oklch,var(--accent)_35%,transparent),transparent_60%)] text-accent">
-                  <Waveform size={96} weight="thin" />
-                </div>
-              )}
+              <Image
+                src={p.imagem}
+                alt=""
+                fill
+                sizes="(min-width: 768px) 46vw, 100vw"
+                className="projeto-img object-cover opacity-90 transition duration-700 group-hover:opacity-100"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-elev via-elev/20 to-transparent" />
             </div>
             <div className="relative p-6 md:p-8">

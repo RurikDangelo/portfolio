@@ -1,6 +1,6 @@
 // Todo texto visível do site, nos dois idiomas. Nenhum componente escreve copy própria.
-// Regra de privacidade: nenhum nome de produto ou cliente. O único print real é o do sistema
-// de laudos, com nomes, valores e mapa borrados; as demais imagens são fotos ilustrativas.
+// Regra de privacidade: nenhum nome de produto ou cliente e nenhum print de sistema real;
+// as imagens dos projetos são fotos ilustrativas do Unsplash.
 
 export const locales = ["pt", "en"] as const;
 export type Locale = (typeof locales)[number];
@@ -11,7 +11,7 @@ export const perfil = {
   github: "RurikDangelo",
   linkedin: "https://www.linkedin.com/in/rurik-d-angelo-626492221",
   email: "",
-  foto: "/perfil.webp",
+  foto: "/sobre.webp",
 };
 
 // Fotos do Unsplash (licença livre), servidas direto do CDN deles.
@@ -23,7 +23,7 @@ type Projeto = {
   resumo: string;
   pontos: string[];
   stack: string[];
-  imagem?: string;
+  imagem: string;
 };
 
 type Etapa = { titulo: string; onde: string; texto: string; tags: string[] };
@@ -42,7 +42,7 @@ type Dicionario = {
   meta: { titulo: string; descricao: string };
   nav: { sobre: string; solucoes: string; projetos: string; trajetoria: string; cta: string };
   hero: { papeis: string[]; sub: string; verProjetos: string; verSolucoes: string };
-  sobre: { titulo: string; texto: string[]; cv: string; destaques: { valor: string; rotulo: string }[] };
+  sobre: { titulo: string; texto: string[]; fotoAlt: string };
   solucoes: { titulo: string; sub: string; lista: Solucao[] };
   automacoes: { titulo: string; sub: string; fluxos: Fluxo[] };
   stack: { titulo: string; rapido: string; detalhe: string };
@@ -91,42 +91,37 @@ const stackGrupos = [
 export { stackGrupos };
 
 const imagens = {
-  plataforma: foto("1551288049-bebda4e38f71"),
-  laudos: "/projetos/laudos.webp",
-  verticais: foto("1720036236694-d0a231c52563"),
-  voz: foto("1617994452722-4145e196248b"),
+  plataforma: foto("1460925895917-afdab827c52f"),
+  painel: foto("1763718528755-4bca23f82ac3"),
+  sobMedida: foto("1542744173-05336fcc7ad4"),
 };
 
 const pt: Dicionario = {
   meta: {
-    titulo: "Rurik D'Angelo | IA e SaaS",
-    descricao: "Plataformas SaaS e IA aplicada que rodam em produção.",
+    titulo: "Rurik D'Angelo | IA e sistemas sob medida",
+    descricao: "Sistemas sob medida para qualquer nicho, com IA aplicada.",
   },
   nav: { sobre: "Sobre", solucoes: "O que construo", projetos: "Projetos", trajetoria: "Trajetória", cta: "Fale comigo" },
   hero: {
     papeis: ["Especialista em IA", "Engenheiro de LLM", "Machine Learning", "Arquiteto de SaaS"],
-    sub: "Construo plataformas SaaS e soluções com IA que rodam em produção.",
+    sub: "Desenvolvo sistemas sob medida para qualquer nicho, com IA aplicada e foco em quem usa no dia a dia.",
     verProjetos: "Ver projetos",
     verSolucoes: "O que construo",
   },
   sobre: {
-    titulo: "Tecnologia que resolve o negócio",
+    titulo: "Tudo começou com jogos",
     texto: [
-      "Meu interesse por programação começou aos 15 anos, escrevendo meus primeiros programas em Java. A curiosidade de entender como o software funciona por dentro virou profissão.",
-      "Hoje sou Head de Tecnologia, formado em Ciência da Computação e especialista em IA, LLM e Machine Learning. Já desenvolvi plataformas SaaS completas do zero, da arquitetura e do banco de dados até a interface e a venda para os clientes.",
+      "Aos 15 anos, eu abria o Eclipse e usava Java para decompilar os jogos da época. Queria entender como eles funcionavam por dentro e mudar uma coisa ou outra só para ver o que acontecia. Foi ali que a curiosidade virou vontade de construir.",
+      "Desde então passei pelo suporte em TI, por sistemas legados e por plataformas SaaS que empresas usam o dia inteiro. Hoje sou Head de Tecnologia, formado em Ciência da Computação e especialista em IA, LLM e Machine Learning.",
+      "Desenvolvo sistemas sob medida para qualquer nicho: entendo como o negócio funciona, desenho a solução e acompanho até ela fazer parte da rotina de quem usa.",
     ],
-    cv: "Baixar CV",
-    destaques: [
-      { valor: "15 anos", rotulo: "idade do meu primeiro código, em Java" },
-      { valor: "150+", rotulo: "rotas numa única plataforma multi-tenant" },
-      { valor: "6,9 ms", rotulo: "consulta que levava 149 ms, depois de reescrita" },
-    ],
+    fotoAlt: "Rurik programando com fone de ouvido, de costas diante do notebook e de perfil",
   },
   solucoes: {
     titulo: "O que eu construo",
-    sub: "Software sob medida para operações reais, do banco de dados à interface.",
+    sub: "Sistemas sob medida para qualquer nicho, do banco de dados à interface.",
     lista: [
-      { icone: "cart", titulo: "Plataformas SaaS", texto: "ERP e CRM multi-tenant, com vendas, estoque, financeiro, fiscal e atendimento integrados." },
+      { icone: "gear", titulo: "Sistemas sob medida", texto: "Gestão, CRM, financeiro e operação desenhados em torno do processo real de cada negócio, seja qual for o segmento." },
       { icone: "robot", titulo: "IA aplicada", texto: "Agentes que leem documentos, respondem clientes e executam tarefas, com revisão humana onde importa." },
       { icone: "plug", titulo: "Dados e integrações", texto: "APIs, painéis de indicadores e migração de dados de planilhas e sistemas antigos." },
     ],
@@ -162,28 +157,28 @@ const pt: Dicionario = {
     titulo: "Trajetória",
     itens: [
       {
-        titulo: "SaaS completos, do zero à venda",
+        titulo: "Plataformas SaaS em produção",
         onde: "Software B2B",
-        texto: "Desenvolvi do zero plataformas SaaS completas de ERP e CRM, da arquitetura à interface, e vendi para empresas que usam o sistema todos os dias. Hoje lidero a tecnologia como Head.",
-        tags: ["Arquitetura", "Multi-tenant", "IA aplicada", "Vendas", "Liderança"],
+        texto: "Criei e evoluí plataformas SaaS de gestão e CRM usadas todos os dias por empresas de segmentos diferentes. Cuido da arquitetura, do produto e da conversa com os clientes, e hoje lidero a área de tecnologia.",
+        tags: ["Arquitetura", "Produto", "IA aplicada", "Liderança"],
       },
       {
         titulo: "Projetos legados",
         onde: "Poliedro Educação",
-        texto: "Trabalhei com projetos legados, mantendo e evoluindo sistemas que já estavam em uso.",
+        texto: "Trabalhei com projetos legados: entender código escrito por outras pessoas, manter o que já funcionava e evoluir sem parar a operação de quem dependia daquilo.",
         tags: ["Sistemas legados", "Manutenção", "Evolução"],
       },
       {
         titulo: "Suporte em TI",
         onde: "Back4App",
-        texto: "Atuei no suporte em TI de uma plataforma de backend como serviço.",
+        texto: "No suporte em TI, o dia a dia era resolver o problema de quem estava do outro lado. Foi uma escola sobre ouvir o usuário antes de propor a solução.",
         tags: ["Suporte", "Infraestrutura"],
       },
       {
-        titulo: "Primeiro código",
-        onde: "Aos 15 anos, em Java",
-        texto: "Foi onde tudo começou: os primeiros programas em Java e a vontade de entender software por dentro.",
-        tags: ["Java", "Lógica de programação"],
+        titulo: "Jogos, Eclipse e Java",
+        onde: "Aos 15 anos",
+        texto: "A paixão por jogos me levou ao código. Com o Eclipse e o Java, eu decompilava os jogos da época para entender a lógica por trás deles.",
+        tags: ["Java", "Eclipse", "Engenharia reversa"],
       },
     ],
   },
@@ -204,80 +199,68 @@ const pt: Dicionario = {
   },
   projetos: {
     titulo: "Projetos selecionados",
-    aviso: "A tela de laudos é real, com dados ocultados. As demais imagens são ilustrativas.",
+    aviso: "Imagens ilustrativas: os sistemas reais guardam dados de clientes.",
     lista: [
       {
         slug: "plataforma",
-        titulo: "Plataforma ERP e CRM white label",
-        resumo: "Varejo, assistência técnica e locação numa plataforma multi-tenant, com CRM no WhatsApp e IA.",
-        pontos: ["Mais de 150 rotas numa única plataforma", "CRM no WhatsApp com IA"],
-        stack: ["Next.js", "React", "PostgreSQL", "Supabase", "Tailwind"],
+        titulo: "Plataforma de gestão e CRM",
+        resumo: "Vendas, estoque, financeiro e atendimento no WhatsApp numa só plataforma, atendendo várias empresas ao mesmo tempo.",
+        pontos: ["Multiempresa e white label", "CRM com IA"],
+        stack: ["Next.js", "React", "PostgreSQL", "Supabase"],
         imagem: imagens.plataforma,
       },
       {
-        slug: "laudos",
-        titulo: "Sistema de laudos técnicos",
-        resumo: "Montagem, acompanhamento e aprovação de laudos, com mapa e indicadores.",
-        pontos: ["Indicadores de produção em tempo real", "Mapa de atuação"],
-        stack: ["Next.js", "PostgreSQL", "Mapas", "PDF"],
-        imagem: imagens.laudos,
+        slug: "painel",
+        titulo: "Painel operacional",
+        resumo: "Acompanhamento de processos técnicos, com indicadores, prazos e mapa de atuação.",
+        pontos: ["Indicadores em tempo real", "Alertas de prazo"],
+        stack: ["Next.js", "PostgreSQL", "Mapas"],
+        imagem: imagens.painel,
       },
       {
-        slug: "verticais",
-        titulo: "Sistemas verticais sob medida",
-        resumo: "Gestão construída em torno do processo de cada negócio, do orçamento à entrega.",
-        pontos: ["Produção por ordem de serviço", "App offline para equipes em campo"],
+        slug: "sob-medida",
+        titulo: "Sistemas sob medida",
+        resumo: "Gestão construída em torno do processo de cada negócio, em qualquer nicho.",
+        pontos: ["Do orçamento à entrega", "App offline para equipes em campo"],
         stack: ["Next.js", "React", "Prisma", "PWA"],
-        imagem: imagens.verticais,
-      },
-      {
-        slug: "voz",
-        titulo: "Assistente de voz com IA",
-        resumo: "Interface holográfica no navegador que acorda com a voz e executa tarefas reais.",
-        pontos: ["Shaders GLSL próprios", "Ferramentas conectadas por MCP"],
-        stack: ["React", "Three.js", "GLSL", "Claude Agent SDK"],
-        imagem: imagens.voz,
+        imagem: imagens.sobMedida,
       },
     ],
   },
   contato: {
     titulo: "Vamos construir algo real",
-    texto: "Aberto a conversar sobre SaaS e IA aplicada.",
+    texto: "Tem um processo que merece virar sistema? Vamos conversar.",
     foco: "Foco",
-    focoValor: "IA, LLM, Machine Learning e SaaS",
+    focoValor: "Sistemas sob medida, IA, LLM e Machine Learning",
   },
 };
 
 const en: Dicionario = {
   meta: {
-    titulo: "Rurik D'Angelo | AI and SaaS",
-    descricao: "SaaS platforms and applied AI running in production.",
+    titulo: "Rurik D'Angelo | AI and custom systems",
+    descricao: "Custom systems for any niche, with applied AI.",
   },
   nav: { sobre: "About", solucoes: "What I build", projetos: "Projects", trajetoria: "Journey", cta: "Get in touch" },
   hero: {
     papeis: ["AI Specialist", "LLM Engineer", "Machine Learning", "SaaS Architect"],
-    sub: "I build SaaS platforms and AI solutions that run in production.",
+    sub: "I build custom systems for any niche, with applied AI and a focus on the people who use them every day.",
     verProjetos: "View projects",
     verSolucoes: "What I build",
   },
   sobre: {
-    titulo: "Technology that solves the business",
+    titulo: "It all started with games",
     texto: [
-      "My interest in programming started at 15, writing my first programs in Java. The curiosity to understand how software works inside became a career.",
-      "Today I am a Head of Technology with a degree in Computer Science and a specialist in AI, LLMs and Machine Learning. I have built complete SaaS platforms from scratch, from architecture and database to the interface and selling them to customers.",
+      "At 15, I would open Eclipse and use Java to decompile the games of the time. I wanted to understand how they worked inside and change one thing or another just to see what happened. That is where curiosity turned into the urge to build.",
+      "Since then I have worked in IT support, on legacy systems and on SaaS platforms that companies use all day. Today I am a Head of Technology with a degree in Computer Science and a specialist in AI, LLMs and Machine Learning.",
+      "I build custom systems for any niche: I learn how the business works, design the solution and stay with it until it is part of the users' routine.",
     ],
-    cv: "Download CV",
-    destaques: [
-      { valor: "Age 15", rotulo: "when I wrote my first code, in Java" },
-      { valor: "150+", rotulo: "routes in a single multi-tenant platform" },
-      { valor: "6.9 ms", rotulo: "query that took 149 ms, after a rewrite" },
-    ],
+    fotoAlt: "Rurik coding with a headset, seen from behind at the laptop and in profile",
   },
   solucoes: {
     titulo: "What I build",
-    sub: "Custom software for real operations, from the database to the interface.",
+    sub: "Custom systems for any niche, from the database to the interface.",
     lista: [
-      { icone: "cart", titulo: "SaaS platforms", texto: "Multi-tenant ERP and CRM with sales, inventory, finance, tax and customer service working together." },
+      { icone: "gear", titulo: "Custom systems", texto: "Management, CRM, finance and operations designed around each business's real process, whatever the industry." },
       { icone: "robot", titulo: "Applied AI", texto: "Agents that read documents, answer customers and run tasks, with human review where it matters." },
       { icone: "plug", titulo: "Data and integrations", texto: "APIs, KPI dashboards and data migration from spreadsheets and legacy systems." },
     ],
@@ -313,28 +296,28 @@ const en: Dicionario = {
     titulo: "Journey",
     itens: [
       {
-        titulo: "Complete SaaS, from zero to sale",
+        titulo: "SaaS platforms in production",
         onde: "B2B software",
-        texto: "I built complete ERP and CRM SaaS platforms from scratch, from architecture to interface, and sold them to companies that use them every day. Today I lead technology as Head.",
-        tags: ["Architecture", "Multi-tenant", "Applied AI", "Sales", "Leadership"],
+        texto: "I created and evolved management and CRM SaaS platforms used every day by companies in different industries. I own the architecture, the product and the conversation with customers, and today I lead the technology area.",
+        tags: ["Architecture", "Product", "Applied AI", "Leadership"],
       },
       {
         titulo: "Legacy projects",
         onde: "Poliedro Educação",
-        texto: "I worked on legacy projects, maintaining and evolving systems that were already in use.",
+        texto: "I worked on legacy projects: understanding code written by other people, keeping what already worked and evolving it without stopping the operation that depended on it.",
         tags: ["Legacy systems", "Maintenance", "Evolution"],
       },
       {
         titulo: "IT support",
         onde: "Back4App",
-        texto: "I worked in IT support for a backend-as-a-service platform.",
+        texto: "In IT support, the daily job was solving the problem of the person on the other side. It taught me to listen to the user before proposing a solution.",
         tags: ["Support", "Infrastructure"],
       },
       {
-        titulo: "First code",
-        onde: "At 15, in Java",
-        texto: "Where it all started: my first Java programs and the urge to understand software from the inside.",
-        tags: ["Java", "Programming logic"],
+        titulo: "Games, Eclipse and Java",
+        onde: "At 15",
+        texto: "My passion for games led me to code. With Eclipse and Java, I decompiled the games of the time to understand the logic behind them.",
+        tags: ["Java", "Eclipse", "Reverse engineering"],
       },
     ],
   },
@@ -355,40 +338,34 @@ const en: Dicionario = {
   },
   projetos: {
     titulo: "Selected projects",
-    aviso: "The reports screen is real, with data hidden. The other images are illustrative.",
+    aviso: "Illustrative images: the real systems hold customer data.",
     lista: [
       {
         ...pt.projetos.lista[0],
-        titulo: "White label ERP and CRM platform",
-        resumo: "Retail, repair services and rentals on a multi-tenant platform, with a WhatsApp CRM and AI.",
-        pontos: ["Over 150 routes in a single platform", "WhatsApp CRM with AI"],
+        titulo: "Management and CRM platform",
+        resumo: "Sales, inventory, finance and WhatsApp service in a single platform, serving several companies at once.",
+        pontos: ["Multi-company and white label", "AI-powered CRM"],
       },
       {
         ...pt.projetos.lista[1],
-        titulo: "Technical reports system",
-        resumo: "Building, tracking and approving reports, with a map and KPIs.",
-        pontos: ["Real-time production KPIs", "Coverage map"],
-        stack: ["Next.js", "PostgreSQL", "Maps", "PDF"],
+        titulo: "Operations dashboard",
+        resumo: "Tracking of technical processes, with KPIs, deadlines and a coverage map.",
+        pontos: ["Real-time KPIs", "Deadline alerts"],
+        stack: ["Next.js", "PostgreSQL", "Maps"],
       },
       {
         ...pt.projetos.lista[2],
-        titulo: "Custom vertical systems",
-        resumo: "Management built around each business's process, from quote to delivery.",
-        pontos: ["Work-order driven production", "Offline app for field teams"],
-      },
-      {
-        ...pt.projetos.lista[3],
-        titulo: "AI voice assistant",
-        resumo: "Holographic browser interface that wakes up by voice and runs real tasks.",
-        pontos: ["Custom GLSL shaders", "Tools connected through MCP"],
+        titulo: "Custom systems",
+        resumo: "Management built around each business's process, in any niche.",
+        pontos: ["From quote to delivery", "Offline app for field teams"],
       },
     ],
   },
   contato: {
     titulo: "Let's build something real",
-    texto: "Open to talk about SaaS and applied AI.",
+    texto: "Got a process that deserves to become a system? Let's talk.",
     foco: "Focus",
-    focoValor: "AI, LLM, Machine Learning and SaaS",
+    focoValor: "Custom systems, AI, LLM and Machine Learning",
   },
 };
 
